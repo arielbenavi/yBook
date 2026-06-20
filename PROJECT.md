@@ -132,7 +132,7 @@ Scraper code in `scripts/`, never imported by the app.
 - [x] 1. Init Vite (react-ts) baseline: `npm create vite@latest . -- --template react-ts`, prune starter clutter, `npm i`, confirm `npm run dev` boots.
 - [x] 2. Add Tailwind + Framer Motion: install + configure (Tailwind v4 via `@tailwindcss/vite` plugin, `@import "tailwindcss"` + `@theme { ... }` in `src/index.css` — no JS config file).
 - [x] 3. Wire scripts: `typecheck` (`tsc -b --noEmit`), `lint` (ESLint flat config with `typescript-eslint` + react-hooks + react-refresh), `test` (vitest run) — all four runnable and clean.
-- [ ] 4. RTL base + design tokens: `<html dir="rtl" lang="he">`, Hebrew web font (Heebo/Assistant), palette/type/spacing tokens in `tailwind.config.js`.
+- [x] 4. RTL base + design tokens: `<html dir="rtl" lang="he">`, Hebrew web font (Assistant w/ Heebo/Rubik fallbacks), palette + radii + shadow tokens in `@theme {}` (no JS config — Tailwind v4).
 - [ ] 5. App shell: minimal `App.tsx` with `AppHeader` placeholder + centered mobile-first container; `dev` renders with zero console errors.
 
 ### Phase 2 — Types & data
@@ -180,3 +180,4 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-19 — Task 1: Vite + React 18 + TS strict scaffold by hand (create-vite@latest needs Node 20). `npm run build` green, `npm run dev` boots clean. Lint + vitest not wired yet (task 3).
 - 2026-06-19 — Task 2: Tailwind v4 via `@tailwindcss/vite` + Framer Motion. `@theme` token mechanism wired (placeholder `--color-brand` to be replaced in task 4). Browser-verified: `bg-amber-50`, `text-brand`, RTL layout all rendering.
 - 2026-06-19 — Task 3: ESLint 10 flat config (typescript-eslint + react-hooks + react-refresh), `tsc -b --noEmit` typecheck, `vitest run` with one smoke test. All three green. jsdom not installed yet — add when first component test needs the DOM.
+- 2026-06-19 — Task 4: warm-paper/ink palette + coral brand + ynet badge color, Assistant font preconnected via Google Fonts, card radius + soft "paper-lift" shadow. Browser-verified at desktop + 380px mobile: rgb tokens match, RTL bidi correct on mixed Hebrew/Latin text, no console errors.

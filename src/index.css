@@ -1,6 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  /* Placeholder design tokens — task 4 fills in the real palette / type / spacing. */
-  --color-brand: #f97316;
+  /* Typography — Hebrew-first stack. Assistant is preconnected in index.html;
+     Heebo/Rubik are graceful fallbacks if a future device has them locally. */
+  --font-sans: 'Assistant', 'Heebo', 'Rubik', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Palette — warm paper + ink, with a coral brand accent.
+     Aiming for a calm broadsheet feel, deliberately not default-Tailwind gray. */
+  --color-paper: #faf6ee;       /* page background — warm off-white */
+  --color-paper-deep: #f3ebdc;  /* recessed surface (e.g. quoted article card) */
+  --color-surface: #ffffff;     /* raised surface (PostCard) */
+  --color-rule: #e8e2d5;        /* hairline dividers, borders */
+  --color-ink: #1a1a1a;         /* primary text */
+  --color-ink-muted: #5a5a5a;   /* secondary — author lines, timestamps */
+  --color-ink-subtle: #8e8e8e;  /* tertiary — counts, meta */
+  --color-brand: #e5572b;       /* warm coral — yBook's accent */
+  --color-brand-soft: #fce5da;  /* tinted background for brand chips */
+  --color-ynet: #ee6004;        /* ynet wordmark badge */
+
+  /* Card radii + soft "paper lift" shadow */
+  --radius-card: 0.875rem;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 16px rgb(0 0 0 / 0.04);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+  }
 }
