@@ -136,7 +136,7 @@ Scraper code in `scripts/`, never imported by the app.
 - [x] 5. App shell: reusable `AppShell` (sticky wordmark header + centered max-w-[600px] feed container). App.tsx composes it with a dashed-border placeholder marking the future feed mount point. Browser-verified at 380px / 600px / 1280px; `mx-auto` centers at desktop, gutters take over on mobile.
 
 ### Phase 2 — Types & data
-- [ ] 6. `src/types.ts`: `Comment`, `ArticleRef`, `Post`, `Feed`, `ScoreContext` per spec.
+- [x] 6. `src/types.ts`: `Comment`, `ArticleRef`, `Post`, `Feed` per spec. `ScoreContext` deferred to task 16 (lives next to the scoring fn).
 - [ ] 7. Seed `data/feed.json`: ~15 hand-built Posts in realistic Hebrew, mixing 2–3 articles; ≥3 posts with nested replies (one nested 2 levels deep).
 - [ ] 8. Data-access module `src/data/feed.ts`: imports JSON, runtime-validates the shape, throws a typed error on mismatch, returns `Feed`. Only path the app uses to read feed data.
 
@@ -182,3 +182,4 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-19 — Task 3: ESLint 10 flat config (typescript-eslint + react-hooks + react-refresh), `tsc -b --noEmit` typecheck, `vitest run` with one smoke test. All three green. jsdom not installed yet — add when first component test needs the DOM.
 - 2026-06-19 — Task 4: warm-paper/ink palette + coral brand + ynet badge color, Assistant font preconnected via Google Fonts, card radius + soft "paper-lift" shadow. Browser-verified at desktop + 380px mobile: rgb tokens match, RTL bidi correct on mixed Hebrew/Latin text, no console errors.
 - 2026-06-19 — Task 5: AppShell component (sticky paper/90 + backdrop-blur header, centered max-w-[600px] main). App.tsx composes shell + dashed placeholder. Verified: desktop centers (340px margins each side), mobile fills with 16px gutters, RTL wordmark anchored top-right.
+- 2026-06-19 — Task 6: `src/types.ts` — Comment / ArticleRef / Post / Feed exactly per PROJECT.md. ScoreContext deliberately omitted; it ships with `scoreComment.ts` in task 16.
