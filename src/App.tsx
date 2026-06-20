@@ -1,9 +1,16 @@
+import AppShell from './components/AppShell'
+
 function App() {
   return (
-    <main className="min-h-screen px-6 py-10">
-      <h1 className="text-3xl font-bold text-brand">yBook</h1>
-      <p className="mt-3 text-ink-muted">פיד של התגובות הכי מעניינות בכתבות ynet.</p>
-    </main>
+    <AppShell>
+      <section
+        aria-label="feed placeholder"
+        className="min-h-[60vh] rounded-card border-2 border-dashed border-rule bg-surface/40 p-10 text-center text-ink-subtle"
+      >
+        <p className="text-sm">פה ירוצו ה־Posts בשלב הבא</p>
+        <p className="mt-1 text-xs uppercase tracking-wider">feed placeholder</p>
+      </section>
+    </AppShell>
   )
 }
 
