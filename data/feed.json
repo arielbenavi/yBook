@@ -1,0 +1,433 @@
+{
+  "generatedAt": "2026-06-19T13:00:00+03:00",
+  "posts": [
+    {
+      "comment": {
+        "id": "tb_100001",
+        "author": "תומר",
+        "timestamp": "2026-06-19T12:00:00+03:00",
+        "body": "כשהאסון עוד יתפוצץ פה לכולנו, איש לא יזכור את הציוצים האלה.",
+        "likes": 11,
+        "dislikes": 3,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100002",
+        "author": "ש.ל.",
+        "timestamp": "2026-06-18T16:00:00+03:00",
+        "body": "מתי גם יאמרו לנו מה זה היה במדויק? כל פעם רק 'תקרית' ולא יותר.",
+        "likes": 9,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "ke9xb4msql",
+        "url": "https://www.ynet.co.il/news/article/ke9xb4msql",
+        "title": "תקרית בגבול הצפון: מטוס יירט מל״ט",
+        "source": "ynet",
+        "author": "אסף גבור",
+        "publishedAt": "2026-06-18T05:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+security"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100003",
+        "author": "אילן ש.",
+        "timestamp": "2026-06-18T15:00:00+03:00",
+        "title": "תפסיקו לכתוב על המשק כאילו זה פיגוע",
+        "body": "המעטפת הכלכלית כן בריאה, פשוט מי שהולך לסופר רואה מספרים אחרים. צריך לבדוק את שני הצדדים.",
+        "likes": 6,
+        "dislikes": 28,
+        "replyCount": 1,
+        "replies": [
+          {
+            "id": "tb_100003_r1",
+            "author": "דוד ל.",
+            "timestamp": "2026-06-18T15:30:00+03:00",
+            "body": "אתה צודק על משהו, אבל זה לא משנה למי שמשלם את החשבון בסוף החודש.",
+            "likes": 17,
+            "dislikes": 1,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "rj7pq2wxnk",
+        "url": "https://www.ynet.co.il/economy/article/rj7pq2wxnk",
+        "title": "יוקר המחיה: מחירי המזון יעלו ב־3% החודש",
+        "source": "ynet",
+        "author": "טל לוי",
+        "publishedAt": "2026-06-18T07:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+economy"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100004",
+        "author": "שאול",
+        "timestamp": "2026-06-18T14:30:00+03:00",
+        "body": "סוף השבוע אני קונה ב־3 סופרים שונים כדי לחסוך 40 שקל. אבסורד.",
+        "likes": 14,
+        "dislikes": 2,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "rj7pq2wxnk",
+        "url": "https://www.ynet.co.il/economy/article/rj7pq2wxnk",
+        "title": "יוקר המחיה: מחירי המזון יעלו ב־3% החודש",
+        "source": "ynet",
+        "author": "טל לוי",
+        "publishedAt": "2026-06-18T07:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+economy"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100005",
+        "author": "דורון_ירושלים",
+        "timestamp": "2026-06-18T13:00:00+03:00",
+        "title": "מה זה בכלל הכותרת הזאת",
+        "body": "כל פעם אתם מציגים תמונה שונה. בחיים אי אפשר לקרוא ולהבין מה באמת קרה שם בשיחה.",
+        "likes": 3,
+        "dislikes": 14,
+        "replyCount": 1,
+        "replies": [
+          {
+            "id": "tb_100005_r1",
+            "author": "עורך הראשי",
+            "timestamp": "2026-06-18T13:30:00+03:00",
+            "body": "צריך לקרוא עד הסוף לפני שמגיבים.",
+            "likes": 4,
+            "dislikes": 1,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100006",
+        "author": "ד.כ.",
+        "timestamp": "2026-06-18T12:45:00+03:00",
+        "body": "כותרות מ־ynet האחרונות מראות שטראמפ של 2026 לא טראמפ של 2017. הוא עייף, ביבי יודע. אבל הוא עדיין יציל אותו? לא בטוח.",
+        "likes": 33,
+        "dislikes": 8,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100007",
+        "author": "מיכל ל.",
+        "timestamp": "2026-06-18T11:15:00+03:00",
+        "body": "טראמפ פותר את העניין דרך טוויטר וכולנו ניצלים? איזה עולם נחמד אתם חיים בו.",
+        "likes": 38,
+        "dislikes": 7,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100008",
+        "author": "רחל",
+        "timestamp": "2026-06-18T10:30:00+03:00",
+        "title": "מספיק עם המחזה הזה",
+        "body": "מי שעוד מאמין למילה אחת ממה שיוצא מהפה של ביבי בשנים האחרונות צריך בדיקה. הכל הצגה אחת גדולה לטובת התיק שלו, וטראמפ — כל עוד זה משרת אותו — ימשיך לזרום.",
+        "likes": 89,
+        "dislikes": 5,
+        "replyCount": 2,
+        "replies": [
+          {
+            "id": "tb_100008_r1",
+            "author": "אסף",
+            "timestamp": "2026-06-18T10:50:00+03:00",
+            "body": "הפעם זה לא הצגה. הפעם כבר באמת אין כיוון.",
+            "likes": 21,
+            "dislikes": 0,
+            "replyCount": 0
+          },
+          {
+            "id": "tb_100008_r2",
+            "author": "מ.ע.",
+            "timestamp": "2026-06-18T11:05:00+03:00",
+            "body": "תרגישי חופשי לעבור לערוץ אחר אם זה מפריע לך כל בוקר.",
+            "likes": 3,
+            "dislikes": 16,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100009",
+        "author": "חחחחחח",
+        "timestamp": "2026-06-18T09:20:00+03:00",
+        "body": "שמישהו יגיד לו המלך עירום (טיפש גמור)",
+        "likes": 22,
+        "dislikes": 0,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100010",
+        "author": "ר.ש.",
+        "timestamp": "2026-06-18T09:00:00+03:00",
+        "body": "מי שמנהל את המשק היום בכלל לא יודע מה עולה חבילת חלב.",
+        "likes": 22,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "rj7pq2wxnk",
+        "url": "https://www.ynet.co.il/economy/article/rj7pq2wxnk",
+        "title": "יוקר המחיה: מחירי המזון יעלו ב־3% החודש",
+        "source": "ynet",
+        "author": "טל לוי",
+        "publishedAt": "2026-06-18T07:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+economy"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100011",
+        "author": "אבי",
+        "timestamp": "2026-06-18T08:45:00+03:00",
+        "body": "ביבי הוא אפס אחד גדול.. אסון לאומי שעוטים אותו בכותרות וניסיונות הצדקה. עוד שנה־שנתיים נסתכל אחורה ולא נאמין שבכלל פתחנו עיתון בבוקר.",
+        "likes": 51,
+        "dislikes": 12,
+        "replyCount": 4,
+        "replies": [
+          {
+            "id": "tb_100011_r1",
+            "author": "יואב",
+            "timestamp": "2026-06-18T09:00:00+03:00",
+            "body": "אני לא בטוח שזה רק 'אסון לאומי'. גם השנים שלפניו לא היו דבש.",
+            "likes": 8,
+            "dislikes": 1,
+            "replyCount": 0
+          },
+          {
+            "id": "tb_100011_r2",
+            "author": "ש.מ.",
+            "timestamp": "2026-06-18T09:15:00+03:00",
+            "body": "השנים שלפניו, גם אם לא היו דבש, התנהלו במסגרת. עכשיו הכל נופל בבת אחת.",
+            "likes": 5,
+            "dislikes": 0,
+            "replyCount": 0
+          },
+          {
+            "id": "tb_100011_r3",
+            "author": "א.ע.",
+            "timestamp": "2026-06-18T09:30:00+03:00",
+            "body": "אפס אחד? אתה עוד תוסיף מאחור כמה אפסים.",
+            "likes": 13,
+            "dislikes": 4,
+            "replyCount": 0
+          },
+          {
+            "id": "tb_100011_r4",
+            "author": "תמיר",
+            "timestamp": "2026-06-18T10:00:00+03:00",
+            "body": "תכתבו מה שתכתבו, ב־2027 נחזור פה ונבדוק.",
+            "likes": 2,
+            "dislikes": 6,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100012",
+        "author": "נעמה",
+        "timestamp": "2026-06-18T08:10:00+03:00",
+        "title": "כל חודש אותו דבר",
+        "body": "כל פעם מבטיחים תיקון ובמקום זה רק עוד התייקרות. אפשר כבר להפסיק לקרוא לזה 'יוקר המחיה' ולקרוא לזה פשוט שוד.",
+        "likes": 47,
+        "dislikes": 3,
+        "replyCount": 2,
+        "replies": [
+          {
+            "id": "tb_100012_r1",
+            "author": "אבי ק.",
+            "timestamp": "2026-06-18T08:30:00+03:00",
+            "body": "אצלנו ב־12 חודשים חבילת קוטג' עלתה ב־22%. זה לא 3% החודש, זה כל הזמן.",
+            "likes": 19,
+            "dislikes": 0,
+            "replyCount": 0
+          },
+          {
+            "id": "tb_100012_r2",
+            "author": "ל.פ.",
+            "timestamp": "2026-06-18T09:10:00+03:00",
+            "body": "מהממשלה כבר אין הפתעות. השאלה היא מה אתה עושה בעצמך.",
+            "likes": 5,
+            "dislikes": 3,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "rj7pq2wxnk",
+        "url": "https://www.ynet.co.il/economy/article/rj7pq2wxnk",
+        "title": "יוקר המחיה: מחירי המזון יעלו ב־3% החודש",
+        "source": "ynet",
+        "author": "טל לוי",
+        "publishedAt": "2026-06-18T07:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+economy"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100013",
+        "author": "יוסי",
+        "timestamp": "2026-06-18T08:00:00+03:00",
+        "title": "מי הגונב מי",
+        "body": "אומרים שטראמפ מנסה לעזור אבל בפועל הוא רק מנסה להתחרות בעצמו על הכותרות של ה־G7. ולא, ביבי לא יציל אותו.",
+        "likes": 19,
+        "dislikes": 4,
+        "replyCount": 1,
+        "replies": [
+          {
+            "id": "tb_100013_r1",
+            "author": "רון",
+            "timestamp": "2026-06-18T08:30:00+03:00",
+            "body": "ה־G7 שלהם עוסק בעצמם, לא בנו.",
+            "likes": 12,
+            "dislikes": 0,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "קנאים או טיפשים: תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T05:30:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+politics"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100014",
+        "author": "ענת ב.",
+        "timestamp": "2026-06-18T07:00:00+03:00",
+        "body": "התקרית הזאת לא תהיה האחרונה. צריך להמשיך להיות חכמים גם כשהמתח יורד לכמה ימים.",
+        "likes": 18,
+        "dislikes": 0,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "ke9xb4msql",
+        "url": "https://www.ynet.co.il/news/article/ke9xb4msql",
+        "title": "תקרית בגבול הצפון: מטוס יירט מל״ט",
+        "source": "ynet",
+        "author": "אסף גבור",
+        "publishedAt": "2026-06-18T05:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+security"
+      }
+    },
+    {
+      "comment": {
+        "id": "tb_100015",
+        "author": "אבי מ.",
+        "timestamp": "2026-06-18T06:30:00+03:00",
+        "title": "כל הכבוד לחיל האוויר",
+        "body": "פעולה מהירה ומדויקת. יישר כוח לכל מי שנשאר עירני אחרי הלילה הקשה.",
+        "likes": 76,
+        "dislikes": 4,
+        "replyCount": 1,
+        "replies": [
+          {
+            "id": "tb_100015_r1",
+            "author": "א.פ.",
+            "timestamp": "2026-06-18T07:00:00+03:00",
+            "body": "אז למה אנחנו לא שומעים יותר על זה במהדורות? צריך גם להראות הצלחות.",
+            "likes": 23,
+            "dislikes": 0,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "ke9xb4msql",
+        "url": "https://www.ynet.co.il/news/article/ke9xb4msql",
+        "title": "תקרית בגבול הצפון: מטוס יירט מל״ט",
+        "source": "ynet",
+        "author": "אסף גבור",
+        "publishedAt": "2026-06-18T05:00:00+03:00",
+        "imageUrl": "https://placehold.co/800x420/f3ebdc/8e8e8e/png?text=ynet+security"
+      }
+    }
+  ]
+}

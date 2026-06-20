@@ -137,7 +137,7 @@ Scraper code in `scripts/`, never imported by the app.
 
 ### Phase 2 — Types & data
 - [x] 6. `src/types.ts`: `Comment`, `ArticleRef`, `Post`, `Feed` per spec. `ScoreContext` deferred to task 16 (lives next to the scoring fn).
-- [ ] 7. Seed `data/feed.json`: ~15 hand-built Posts in realistic Hebrew, mixing 2–3 articles; ≥3 posts with nested replies (one nested 2 levels deep).
+- [x] 7. Seed `data/feed.json`: 15 hand-built Posts across 3 articles (the real Trump/Netanyahu piece + a plausible cost-of-living one + a plausible northern-border one). Anchored by two verbatim real comments (חחחחחח / אבי). 7 posts with nested replies (1 level deep). Engineered so Top-by-score (רחל), Newest (תומר), Most-replied (אבי) are three different posts.
 - [ ] 8. Data-access module `src/data/feed.ts`: imports JSON, runtime-validates the shape, throws a typed error on mismatch, returns `Feed`. Only path the app uses to read feed data.
 
 ### Phase 3 — Feed UI (static render)
@@ -183,3 +183,4 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-19 — Task 4: warm-paper/ink palette + coral brand + ynet badge color, Assistant font preconnected via Google Fonts, card radius + soft "paper-lift" shadow. Browser-verified at desktop + 380px mobile: rgb tokens match, RTL bidi correct on mixed Hebrew/Latin text, no console errors.
 - 2026-06-19 — Task 5: AppShell component (sticky paper/90 + backdrop-blur header, centered max-w-[600px] main). App.tsx composes shell + dashed placeholder. Verified: desktop centers (340px margins each side), mobile fills with 16px gutters, RTL wordmark anchored top-right.
 - 2026-06-19 — Task 6: `src/types.ts` — Comment / ArticleRef / Post / Feed exactly per PROJECT.md. ScoreContext deliberately omitted; it ships with `scoreComment.ts` in task 16.
+- 2026-06-19 — Task 7: 15-post seed in `data/feed.json` across 3 articles. Ynet og:image didn't come back via WebFetch, so all three images use themed placehold.co URLs (paper-deep bg, ink-subtle fg). 2 net-negative posts, 7 with replies, mix of titled/untitled, Hebrew+Latin embeds (G7, 2026, ynet) for bidi. Verified the three sort axes (score / newest / replies) produce three different winners.
