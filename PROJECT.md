@@ -138,7 +138,7 @@ Scraper code in `scripts/`, never imported by the app.
 ### Phase 2 — Types & data
 - [x] 6. `src/types.ts`: `Comment`, `ArticleRef`, `Post`, `Feed` per spec. `ScoreContext` deferred to task 16 (lives next to the scoring fn).
 - [x] 7. Seed `data/feed.json`: 15 hand-built Posts across 3 articles (the real Trump/Netanyahu piece + a plausible cost-of-living one + a plausible northern-border one). Anchored by two verbatim real comments (חחחחחח / אבי). 7 posts with nested replies (1 level deep). Engineered so Top-by-score (רחל), Newest (תומר), Most-replied (אבי) are three different posts.
-- [ ] 8. Data-access module `src/data/feed.ts`: imports JSON, runtime-validates the shape, throws a typed error on mismatch, returns `Feed`. Only path the app uses to read feed data.
+- [x] 8. Data-access module `src/data/feed.ts`: imports JSON, runtime-validates the shape, throws `FeedShapeError` on mismatch, exposes `loadFeed(): Promise<Feed>`. Async on purpose so Phase 6's fetched/live source is a true one-file swap. Validation runs eagerly at module load — bad shape fails the app, not a deep render.
 
 ### Phase 3 — Feed UI (static render)
 - [ ] 9. `PostCardHeader`: avatar (initial + deterministic color via `utils/avatarColor`), author, relative time (`utils/time`).
@@ -184,3 +184,4 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-19 — Task 5: AppShell component (sticky paper/90 + backdrop-blur header, centered max-w-[600px] main). App.tsx composes shell + dashed placeholder. Verified: desktop centers (340px margins each side), mobile fills with 16px gutters, RTL wordmark anchored top-right.
 - 2026-06-19 — Task 6: `src/types.ts` — Comment / ArticleRef / Post / Feed exactly per PROJECT.md. ScoreContext deliberately omitted; it ships with `scoreComment.ts` in task 16.
 - 2026-06-19 — Task 7: 15-post seed in `data/feed.json` across 3 articles. Ynet og:image didn't come back via WebFetch, so all three images use themed placehold.co URLs (paper-deep bg, ink-subtle fg). 2 net-negative posts, 7 with replies, mix of titled/untitled, Hebrew+Latin embeds (G7, 2026, ynet) for bidi. Verified the three sort axes (score / newest / replies) produce three different winners.
+- 2026-06-19 — Task 8: `src/data/feed.ts` — async `loadFeed(): Promise<Feed>` backed by an eager runtime validator (`checkFeed → checkPost → checkArticleRef/checkComment`). Throws `FeedShapeError` with path-qualified messages. Also verifies `replyCount === replies.length` per comment. The seed passes; vitest's module load doubled as a parser smoke check.
