@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+@theme {
+  /* Placeholder design tokens — task 4 fills in the real palette / type / spacing. */
+  --color-brand: #f97316;
+}

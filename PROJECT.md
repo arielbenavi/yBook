@@ -130,7 +130,7 @@ Scraper code in `scripts/`, never imported by the app.
 
 ### Phase 1 — Scaffold & harness
 - [x] 1. Init Vite (react-ts) baseline: `npm create vite@latest . -- --template react-ts`, prune starter clutter, `npm i`, confirm `npm run dev` boots.
-- [ ] 2. Add Tailwind + Framer Motion: install + configure (`tailwind.config.js`, `postcss.config.js`), `@tailwind` directives in `src/index.css`.
+- [x] 2. Add Tailwind + Framer Motion: install + configure (Tailwind v4 via `@tailwindcss/vite` plugin, `@import "tailwindcss"` + `@theme { ... }` in `src/index.css` — no JS config file).
 - [ ] 3. Wire scripts: `typecheck` (`tsc --noEmit`), `lint` (ESLint flat config with `@typescript-eslint` + react + react-hooks), `test` (vitest + jsdom) — all four runnable and clean.
 - [ ] 4. RTL base + design tokens: `<html dir="rtl" lang="he">`, Hebrew web font (Heebo/Assistant), palette/type/spacing tokens in `tailwind.config.js`.
 - [ ] 5. App shell: minimal `App.tsx` with `AppHeader` placeholder + centered mobile-first container; `dev` renders with zero console errors.
@@ -178,3 +178,4 @@ Scraper code in `scripts/`, never imported by the app.
 
 - _(seed)_ Repo initialized from PROJECT.md and CLAUDE.md. Plan to be finalized in plan mode.
 - 2026-06-19 — Task 1: Vite + React 18 + TS strict scaffold by hand (create-vite@latest needs Node 20). `npm run build` green, `npm run dev` boots clean. Lint + vitest not wired yet (task 3).
+- 2026-06-19 — Task 2: Tailwind v4 via `@tailwindcss/vite` + Framer Motion. `@theme` token mechanism wired (placeholder `--color-brand` to be replaced in task 4). Browser-verified: `bg-amber-50`, `text-brand`, RTL layout all rendering.
