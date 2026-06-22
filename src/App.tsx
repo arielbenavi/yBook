@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import AppShell from './components/AppShell'
+import CommentBody from './components/CommentBody'
 import PostCardHeader from './components/PostCardHeader'
+import QuotedArticleCard from './components/QuotedArticleCard'
 import { loadFeed } from './data/feed'
 import type { Post } from './types'
 
@@ -14,19 +16,25 @@ function App() {
   return (
     <AppShell>
       <section
-        aria-label="PostCardHeader preview"
+        aria-label="PostCard preview"
         className="rounded-card border-2 border-dashed border-rule bg-surface/40 p-6"
       >
         <p className="mb-5 text-xs uppercase tracking-wider text-ink-subtle">
-          PostCardHeader · eyeball preview (body / quote / footer come next)
+          Header + Body + Quoted · eyeball preview (footer comes next)
         </p>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-8">
           {posts?.slice(0, 3).map(p => (
-            <PostCardHeader
-              key={p.comment.id}
-              author={p.comment.author}
-              timestamp={p.comment.timestamp}
-            />
+            <article key={p.comment.id} className="flex flex-col gap-3">
+              <PostCardHeader
+                author={p.comment.author}
+                timestamp={p.comment.timestamp}
+              />
+              <CommentBody
+                title={p.comment.title}
+                body={p.comment.body}
+              />
+              <QuotedArticleCard article={p.quoted} />
+            </article>
           ))}
         </div>
       </section>
