@@ -21,8 +21,17 @@ Playwright (devDependency) for the scraper. No backend.
 - Do **ONE task** from the Implementation plan per iteration. Implement it **fully** —
   no stubs, no TODOs, no "left as an exercise".
 - After each task, run `typecheck` + `lint` + `test`. Fix **all** failures before moving on.
-- Then update PROJECT.md (check the task off, add a one-line progress entry), commit with a
-  clear message, and **stop**. Fresh context for the next task.
+- Then update PROJECT.md (check the task off, add a one-line progress entry) and commit with
+  a clear message.
+- **Verify the commit is self-contained BEFORE pushing.** After `git commit`:
+  1. `git status --porcelain` must be empty — anything untracked or unstaged means
+     something the commit needs got left behind. This is exactly how 330ddf7 shipped
+     broken: App.tsx imported `src/components/CommentBody.tsx` but the file was never staged.
+  2. Build from the committed tree, not the dirty working dir:
+     `git stash -u && npm run build && git stash pop` (or a fresh clone / worktree).
+     The build must pass.
+  Only push if both checks are clean.
+- Then **stop**. Fresh context for the next task.
 - YOU MUST NOT declare a phase or the project "done" until typecheck, lint, and tests all pass.
 - Use the **simplest approach that works**. Do not add abstractions, premature refactors,
   or extra dependencies unless a task asks for them.
