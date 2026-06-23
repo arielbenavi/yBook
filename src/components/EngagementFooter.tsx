@@ -32,10 +32,10 @@ export default function EngagementFooter({ comment }: Props) {
       </span>
       {score !== undefined && (
         <span
-          aria-label={`ציון עניין ${score}`}
-          className="ms-auto rounded-full bg-brand-soft px-2 py-0.5 text-xs font-medium text-brand"
+          aria-label={`ציון עניין ${Math.round(score)}`}
+          className="ms-auto rounded-full bg-rule/40 px-2 py-0.5 text-xs font-medium text-ink-subtle"
         >
-          {score}
+          {Math.round(score)}
         </span>
       )}
     </div>
