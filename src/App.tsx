@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import AppShell from './components/AppShell'
+import EmptyState from './components/EmptyState'
+import ErrorState from './components/ErrorState'
 import FeedList from './components/FeedList'
 import FeedSkeleton from './components/FeedSkeleton'
 import SortToggle from './components/SortToggle'
@@ -17,7 +19,10 @@ function App() {
   const [feed, setFeed] = useState<FeedState>({ status: 'loading' })
   const [sortMode, setSortMode] = useState<SortMode>('top')
 
-  useEffect(() => {
+  // Pure: kicks off the load; setState only happens asynchronously inside
+  // the promise callbacks, so it never fires synchronously inside the
+  // effect body (react-hooks/set-state-in-effect).
+  const fetchFeed = useCallback(() => {
     loadFeed()
       .then(f => setFeed({ status: 'loaded', posts: f.posts }))
       .catch((err: unknown) =>
@@ -27,6 +32,17 @@ function App() {
         }),
       )
   }, [])
+
+  // Event handler — not inside an effect, so the synchronous setFeed is fine.
+  // Resets to loading so the skeleton flashes during retry.
+  const handleRetry = useCallback(() => {
+    setFeed({ status: 'loading' })
+    fetchFeed()
+  }, [fetchFeed])
+
+  useEffect(() => {
+    fetchFeed()
+  }, [fetchFeed])
 
   // One `now` per load → recency stays consistent across the whole feed.
   const ranked = useMemo(() => {
@@ -48,8 +64,13 @@ function App() {
       <div className="flex flex-col gap-4">
         <SortToggle mode={sortMode} onChange={setSortMode} />
         {feed.status === 'loading' && <FeedSkeleton />}
-        {feed.status === 'loaded' && <FeedList posts={sorted ?? []} />}
-        {/* feed.status === 'error' → task 20 */}
+        {feed.status === 'loaded' && feed.posts.length === 0 && <EmptyState />}
+        {feed.status === 'loaded' && feed.posts.length > 0 && (
+          <FeedList posts={sorted ?? []} />
+        )}
+        {feed.status === 'error' && (
+          <ErrorState message={feed.error.message} onRetry={handleRetry} />
+        )}
       </div>
     </AppShell>
   )
