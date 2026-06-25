@@ -12,7 +12,7 @@ export default function QuotedArticleCard({ article }: Props) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`קרא ב־ynet: ${title}`}
-      className="block overflow-hidden rounded-card border border-rule bg-paper-deep transition-colors hover:border-ink-subtle/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+      className="block overflow-hidden rounded-xl border border-rule bg-paper-deep transition-colors hover:border-ink-subtle/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
     >
       {imageUrl ? (
         <img

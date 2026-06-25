@@ -46,7 +46,7 @@ export default function SortToggle({ mode, onChange }: Props) {
             className={`inline-flex min-h-[44px] items-center rounded-full px-4 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand md:min-h-0 md:px-3 md:py-1 ${
               active
                 ? 'bg-brand text-white'
-                : 'text-ink-muted hover:text-ink'
+                : 'text-ink-muted hover:bg-paper-deep hover:text-ink'
             }`}
           >
             {o.label}

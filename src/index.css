@@ -20,7 +20,7 @@
 
   /* Card radii + soft "paper lift" shadow */
   --radius-card: 0.875rem;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 6px 16px rgb(0 0 0 / 0.04);
+  --shadow-card: 0 1px 3px rgb(0 0 0 / 0.06), 0 6px 20px rgb(0 0 0 / 0.07);
 }
 
 @layer base {

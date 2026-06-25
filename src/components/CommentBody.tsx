@@ -9,7 +9,7 @@ export default function CommentBody({ title, body }: Props) {
       {title && (
         <p className="text-lg font-bold leading-snug text-ink">{title}</p>
       )}
-      <p className="leading-relaxed whitespace-pre-line break-words text-ink">
+      <p className="leading-[1.7] whitespace-pre-line break-words text-ink">
         {body}
       </p>
     </div>
