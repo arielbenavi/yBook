@@ -12,14 +12,17 @@ const STAGGER_CAP = 0.32
 
 export default function FeedList({ posts }: Props) {
   return (
-    <div className="flex flex-col gap-5">
+    // role="list" because Safari strips list semantics when list-style is none
+    // (which Tailwind's flex effectively gives us).
+    <ul role="list" className="flex flex-col gap-5">
       {posts.map((p, i) => (
-        <PostCard
-          key={p.comment.id}
-          post={p}
-          mountDelay={Math.min(i * STAGGER_STEP, STAGGER_CAP)}
-        />
+        <li key={p.comment.id}>
+          <PostCard
+            post={p}
+            mountDelay={Math.min(i * STAGGER_STEP, STAGGER_CAP)}
+          />
+        </li>
       ))}
-    </div>
+    </ul>
   )
 }

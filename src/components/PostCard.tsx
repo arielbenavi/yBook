@@ -18,6 +18,7 @@ export default function PostCard({ post, mountDelay = 0 }: Props) {
   const { comment, quoted } = post
   return (
     <motion.article
+      aria-label={`${comment.author} ב-ynet`}
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.28, delay: mountDelay, ease: 'easeOut' }}

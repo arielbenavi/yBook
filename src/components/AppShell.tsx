@@ -9,9 +9,9 @@ export default function AppShell({ children }: AppShellProps) {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 border-b border-rule bg-paper/90 backdrop-blur">
         <div className="mx-auto flex max-w-[600px] items-center px-4 py-3">
-          <span className="text-xl font-extrabold tracking-tight text-brand">
+          <h1 className="text-xl font-extrabold tracking-tight text-brand">
             yBook
-          </span>
+          </h1>
         </div>
       </header>
       <main className="mx-auto max-w-[600px] px-4 py-6">{children}</main>

@@ -13,10 +13,10 @@
   --color-rule: #e8e2d5;        /* hairline dividers, borders */
   --color-ink: #1a1a1a;         /* primary text */
   --color-ink-muted: #5a5a5a;   /* secondary — author lines, timestamps */
-  --color-ink-subtle: #8e8e8e;  /* tertiary — counts, meta */
+  --color-ink-subtle: #6b6b6b;  /* tertiary — counts, meta; darkened from #8e8e8e for WCAG-AA contrast on paper */
   --color-brand: #e5572b;       /* warm coral — yBook's accent */
   --color-brand-soft: #fce5da;  /* tinted background for brand chips */
-  --color-ynet: #ee6004;        /* ynet wordmark badge */
+  --color-ynet: #be4d00;        /* ynet badge — darkened from #ee6004 so white text reaches WCAG-AA */
 
   /* Card radii + soft "paper lift" shadow */
   --radius-card: 0.875rem;
