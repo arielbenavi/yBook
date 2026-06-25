@@ -23,7 +23,7 @@ export default function ReplyThread({ replies }: Props) {
         type="button"
         onClick={() => setExpanded(prev => !prev)}
         aria-expanded={expanded}
-        className="self-start text-sm font-medium text-brand hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+        className="inline-flex min-h-[44px] items-center self-start text-sm font-medium text-brand hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand md:min-h-0"
       >
         {label}
       </button>

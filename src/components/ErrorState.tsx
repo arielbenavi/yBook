@@ -25,7 +25,7 @@ export default function ErrorState({ message, onRetry }: Props) {
       <button
         type="button"
         onClick={onRetry}
-        className="rounded-full bg-brand px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-brand/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand"
+        className="inline-flex min-h-[44px] items-center rounded-full bg-brand px-5 text-sm font-medium text-white transition-colors hover:bg-brand/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-brand md:min-h-0 md:py-1.5"
       >
         נסה שוב
       </button>
