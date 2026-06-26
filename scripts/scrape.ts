@@ -10,6 +10,35 @@ const LEVEL1 = `${POPUP} article.ArticleComment2026.level1`
 const LEVEL2 = `${POPUP} article.ArticleComment2026.level2`
 const SHOW_MORE = `${POPUP} div.showMoreCommentsButton`
 const REPLY_BTN = `${POPUP} button.commentCount`
+const ALL_COMMENTS = `${POPUP} article.ArticleComment2026`
+
+type RawApiItem = {
+  id: number
+  author: string
+  pubDate: string
+  text: string
+  level: number
+  likes: number
+  unlikes: number
+  talkback_like: number
+  talkback_parent_id: Record<string, unknown> | null
+  article_id: string
+  [key: string]: unknown
+}
+
+type RawDomItem = {
+  id: string
+  author: string
+  date: string
+  text: string
+  level: number
+  likes: number
+  dislikes: number
+}
+
+type CaptureResult =
+  | { strategy: 'network'; items: RawApiItem[]; endpointPattern: string }
+  | { strategy: 'dom'; items: RawDomItem[] }
 
 const url = process.argv[2]
 
@@ -21,6 +50,65 @@ if (!url) {
 if (!url.includes('ynet.co.il')) {
   console.error('Error: URL must be a ynet.co.il article')
   process.exit(1)
+}
+
+function setupInterception(page: Page) {
+  const byId = new Map<number, RawApiItem>()
+  let pattern: string | undefined
+  const pending: Promise<void>[] = []
+
+  page.on('response', (resp) => {
+    if (!resp.url().includes('/api/talkbacks/')) return
+    const p = (async () => {
+      try {
+        const json: Record<string, unknown> = await resp.json()
+        const rss = json.rss as Record<string, unknown> | undefined
+        const channel = rss?.channel as Record<string, unknown> | undefined
+        const items = channel?.item
+        if (!Array.isArray(items)) return
+        if (!pattern) {
+          pattern = resp.url().replace(/\/[^/]+\/[^/]+\/\d+$/, '/{slug}/{sort}/{offset}')
+        }
+        for (const raw of items) {
+          const item = raw as RawApiItem
+          if (typeof item.id === 'number') byId.set(item.id, item)
+        }
+      } catch { /* non-JSON or parse error */ }
+    })()
+    pending.push(p)
+  })
+
+  return {
+    flush: () => Promise.all(pending),
+    items: () => [...byId.values()],
+    endpoint: () => pattern,
+  }
+}
+
+async function captureFromDom(page: Page): Promise<RawDomItem[]> {
+  return page.evaluate((sel: string) => {
+    const articles = document.querySelectorAll(sel)
+    return Array.from(articles).map((el) => {
+      const id = (el as HTMLElement).dataset.commentId ?? ''
+      const author = el.querySelector('span.CommentDetails span.author')?.textContent?.trim() ?? ''
+      const date = el.querySelector('span.CommentDetails time.DateDisplay')?.textContent?.trim() ?? ''
+      const wrapper = el.querySelector('div.commentDetailsWrapper')
+      const textDiv = wrapper ? (wrapper.children[1] as HTMLElement | undefined) : null
+      const text = textDiv?.textContent?.trim() ?? ''
+      const level = el.classList.contains('level1') ? 1 : 2
+      const likesText = el.querySelector('span.likesCounter.redCounter')?.textContent?.trim() ?? '0'
+      const dislikesText = el.querySelector('span.likesCounter.unlikesCounter')?.textContent?.trim() ?? '0'
+      return {
+        id,
+        author,
+        date,
+        text,
+        level,
+        likes: parseInt(likesText, 10) || 0,
+        dislikes: parseInt(dislikesText, 10) || 0,
+      }
+    })
+  }, ALL_COMMENTS)
 }
 
 async function openCommentsPopup(page: Page): Promise<void> {
@@ -101,6 +189,7 @@ async function scrape(articleUrl: string): Promise<void> {
 
   const browser = await chromium.launch({ headless: true })
   const page = await browser.newPage()
+  const net = setupInterception(page)
 
   try {
     await page.goto(articleUrl, { waitUntil: 'domcontentloaded', timeout: 30_000 })
@@ -122,6 +211,34 @@ async function scrape(articleUrl: string): Promise<void> {
     console.log(`Replies: ${replies}`)
     console.log(`Total visible comments: ${topLevel + replies}`)
 
+    await net.flush()
+    let result: CaptureResult
+    const netItems = net.items()
+
+    if (netItems.length > 0) {
+      result = {
+        strategy: 'network',
+        items: netItems,
+        endpointPattern: net.endpoint()!,
+      }
+    } else {
+      console.log('\nNetwork interception captured nothing — falling back to DOM parsing')
+      result = { strategy: 'dom', items: await captureFromDom(page) }
+    }
+
+    console.log('\n--- Capture results ---')
+    console.log(`Strategy: ${result.strategy}`)
+    if (result.strategy === 'network') {
+      console.log(`Endpoint pattern: ${result.endpointPattern}`)
+    }
+    console.log(`Captured: ${result.items.length} comments`)
+    console.log(`Expected (DOM count): ${topLevel + replies}`)
+
+    if (result.items.length > 0) {
+      console.log('\nSample raw comment:')
+      console.log(JSON.stringify(result.items[0], null, 2))
+    }
+
     const feed = {
       generatedAt: new Date().toISOString(),
       posts: [] as unknown[],
@@ -129,7 +246,7 @@ async function scrape(articleUrl: string): Promise<void> {
 
     const outPath = resolve(__dirname, '..', 'data', 'feed.json')
     writeFileSync(outPath, JSON.stringify(feed, null, 2) + '\n')
-    console.log(`Wrote stub feed to ${outPath}`)
+    console.log(`\nWrote stub feed to ${outPath}`)
   } finally {
     await browser.close()
   }
