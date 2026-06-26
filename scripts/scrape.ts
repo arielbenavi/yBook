@@ -1,9 +1,13 @@
 import { chromium, type Page } from 'playwright'
-import { writeFileSync } from 'node:fs'
+import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
+const PROJECT_ROOT = resolve(__dirname, '..')
+const OUT_PATH = resolve(PROJECT_ROOT, 'data', 'feed.json')
+
+// --- Selectors ---
 
 const POPUP = 'section#ArticleCommentsPopup'
 const LEVEL1 = `${POPUP} article.ArticleComment2026.level1`
@@ -11,6 +15,8 @@ const LEVEL2 = `${POPUP} article.ArticleComment2026.level2`
 const SHOW_MORE = `${POPUP} div.showMoreCommentsButton`
 const REPLY_BTN = `${POPUP} button.commentCount`
 const ALL_COMMENTS = `${POPUP} article.ArticleComment2026`
+
+// --- Raw types ---
 
 type RawApiItem = {
   id: number
@@ -20,7 +26,6 @@ type RawApiItem = {
   level: number
   likes: number
   unlikes: number
-  talkback_like: number
   talkback_parent_id: Record<string, unknown> | null
   article_id: string
   [key: string]: unknown
@@ -36,9 +41,7 @@ type RawDomItem = {
   dislikes: number
 }
 
-type CaptureResult =
-  | { strategy: 'network'; items: RawApiItem[]; endpointPattern: string }
-  | { strategy: 'dom'; items: RawDomItem[] }
+// --- CLI ---
 
 const url = process.argv[2]
 
@@ -52,38 +55,63 @@ if (!url.includes('ynet.co.il')) {
   process.exit(1)
 }
 
+// --- Network interception: discover talkback API base URL ---
+
 function setupInterception(page: Page) {
-  const byId = new Map<number, RawApiItem>()
-  let pattern: string | undefined
+  let baseUrl: string | undefined
   const pending: Promise<void>[] = []
 
   page.on('response', (resp) => {
     if (!resp.url().includes('/api/talkbacks/')) return
+    if (baseUrl) return
     const p = (async () => {
       try {
         const json: Record<string, unknown> = await resp.json()
         const rss = json.rss as Record<string, unknown> | undefined
         const channel = rss?.channel as Record<string, unknown> | undefined
-        const items = channel?.item
-        if (!Array.isArray(items)) return
-        if (!pattern) {
-          pattern = resp.url().replace(/\/[^/]+\/[^/]+\/\d+$/, '/{slug}/{sort}/{offset}')
-        }
-        for (const raw of items) {
-          const item = raw as RawApiItem
-          if (typeof item.id === 'number') byId.set(item.id, item)
-        }
-      } catch { /* non-JSON or parse error */ }
+        if (!Array.isArray(channel?.item)) return
+        baseUrl = resp.url().replace(/\/\d+$/, '')
+      } catch { /* non-JSON response */ }
     })()
     pending.push(p)
   })
 
   return {
     flush: () => Promise.all(pending),
-    items: () => [...byId.values()],
-    endpoint: () => pattern,
+    baseUrl: () => baseUrl,
   }
 }
+
+// --- Active pagination: fetch all pages until hasMore === 0 ---
+
+async function fetchAllComments(page: Page, baseUrl: string): Promise<RawApiItem[]> {
+  const byId = new Map<number, RawApiItem>()
+  let offset = 0
+
+  while (offset < 100) {
+    const resp: Record<string, unknown> = await page.evaluate(
+      async (u: string) => { const r = await fetch(u); return r.json() },
+      `${baseUrl}/${offset}`,
+    )
+    const rss = resp.rss as Record<string, unknown> | undefined
+    const channel = rss?.channel as Record<string, unknown> | undefined
+    const items = channel?.item
+    if (!Array.isArray(items) || items.length === 0) break
+
+    for (const raw of items) {
+      const item = raw as RawApiItem
+      if (typeof item.id === 'number') byId.set(item.id, item)
+    }
+
+    if (!channel?.hasMore) break
+    offset++
+  }
+
+  console.log(`Fetched ${offset + 1} API page(s), ${byId.size} unique comments`)
+  return [...byId.values()]
+}
+
+// --- DOM fallback capture ---
 
 async function captureFromDom(page: Page): Promise<RawDomItem[]> {
   return page.evaluate((sel: string) => {
@@ -110,6 +138,189 @@ async function captureFromDom(page: Page): Promise<RawDomItem[]> {
     })
   }, ALL_COMMENTS)
 }
+
+// --- ArticleRef extraction from page meta tags ---
+
+async function extractArticleRef(page: Page, articleUrl: string) {
+  const slugMatch = articleUrl.match(/\/article\/([a-zA-Z0-9]+)/)
+  const id = slugMatch?.[1] ?? ''
+
+  const meta = await page.evaluate(() => ({
+    ogTitle: document.querySelector('meta[property="og:title"]')?.getAttribute('content') ?? '',
+    ogUrl: document.querySelector('meta[property="og:url"]')?.getAttribute('content') ?? '',
+    ogImage: document.querySelector('meta[property="og:image"]')?.getAttribute('content') ?? '',
+    publishedTime: document.querySelector('meta[property="article:published_time"]')?.getAttribute('content') ?? '',
+    vrAuthor: document.querySelector('meta[property="vr:author"]')?.getAttribute('content') ?? '',
+  }))
+
+  return {
+    id,
+    url: meta.ogUrl || articleUrl,
+    title: meta.ogTitle || 'Untitled',
+    source: 'ynet' as const,
+    author: meta.vrAuthor || 'ynet',
+    publishedAt: meta.publishedTime || new Date().toISOString(),
+    imageUrl: meta.ogImage || undefined,
+  }
+}
+
+// --- Mapping: API items → Post[] ---
+
+function mapApiToPosts(
+  items: RawApiItem[],
+  quoted: ReturnType<typeof extractArticleRef> extends Promise<infer T> ? T : never,
+) {
+  const topLevel = items.filter(i => i.level === 1)
+  const level2 = items.filter(i => i.level === 2)
+
+  const replyMap = new Map<number, RawApiItem[]>()
+  for (const reply of level2) {
+    const parentId = (reply.talkback_parent_id as Record<string, unknown> | null)
+      ?.talkbackId as number | undefined
+    if (!parentId) continue
+    const arr = replyMap.get(parentId) ?? []
+    arr.push(reply)
+    replyMap.set(parentId, arr)
+  }
+
+  return topLevel.map(item => {
+    const childReplies = replyMap.get(item.id) ?? []
+    const mappedReplies = childReplies.map(r => ({
+      id: String(r.id),
+      author: r.author || 'אנונימי',
+      timestamp: r.pubDate,
+      body: r.text,
+      likes: r.likes,
+      dislikes: r.unlikes,
+      replyCount: 0,
+    }))
+
+    return {
+      comment: {
+        id: String(item.id),
+        author: item.author || 'אנונימי',
+        timestamp: item.pubDate,
+        body: item.text,
+        likes: item.likes,
+        dislikes: item.unlikes,
+        replyCount: mappedReplies.length,
+        ...(mappedReplies.length > 0 ? { replies: mappedReplies } : {}),
+      },
+      quoted,
+    }
+  })
+}
+
+// --- Mapping: DOM items → Post[] (fallback) ---
+
+function parseDomDate(dateStr: string): string {
+  const m = dateStr.match(/(\d{2}):(\d{2})\s*\|\s*(\d{2})\.(\d{2})\.(\d{2})/)
+  if (!m) return new Date().toISOString()
+  const [, hh, mm, dd, mo, yy] = m
+  return `20${yy}-${mo}-${dd}T${hh}:${mm}:00.000Z`
+}
+
+function mapDomToPosts(
+  items: RawDomItem[],
+  quoted: ReturnType<typeof extractArticleRef> extends Promise<infer T> ? T : never,
+) {
+  const posts: ReturnType<typeof mapApiToPosts> = []
+  let current: { comment: Record<string, unknown>; replies: Record<string, unknown>[] } | null = null
+
+  function finalize() {
+    if (!current) return
+    current.comment.replyCount = current.replies.length
+    if (current.replies.length > 0) current.comment.replies = current.replies
+    posts.push({ comment: current.comment as (typeof posts)[number]['comment'], quoted })
+  }
+
+  for (const item of items) {
+    const mapped = {
+      id: item.id || `dom-${posts.length}`,
+      author: item.author || 'אנונימי',
+      timestamp: parseDomDate(item.date),
+      body: item.text,
+      likes: item.likes,
+      dislikes: item.dislikes,
+    }
+
+    if (item.level === 1) {
+      finalize()
+      current = { comment: { ...mapped, replyCount: 0 }, replies: [] }
+    } else if (current) {
+      current.replies.push({ ...mapped, replyCount: 0 })
+    }
+  }
+  finalize()
+  return posts
+}
+
+// --- Feed validation (mirrors src/data/feed.ts checkFeed) ---
+
+function validateFeedShape(data: unknown): void {
+  if (typeof data !== 'object' || data === null || Array.isArray(data)) {
+    throw new Error('feed: expected object')
+  }
+  const feed = data as Record<string, unknown>
+  if (typeof feed.generatedAt !== 'string') {
+    throw new Error(`feed.generatedAt: expected string, got ${typeof feed.generatedAt}`)
+  }
+  if (!Array.isArray(feed.posts)) {
+    throw new Error(`feed.posts: expected array, got ${typeof feed.posts}`)
+  }
+  for (let i = 0; i < (feed.posts as unknown[]).length; i++) {
+    const raw = (feed.posts as unknown[])[i]
+    const p = `posts[${i}]`
+    if (typeof raw !== 'object' || raw === null) throw new Error(`${p}: expected object`)
+    const post = raw as Record<string, unknown>
+    validateComment(post.comment, `${p}.comment`)
+    validateArticleRef(post.quoted, `${p}.quoted`)
+  }
+}
+
+function validateComment(v: unknown, path: string): void {
+  if (typeof v !== 'object' || v === null) throw new Error(`${path}: expected object`)
+  const c = v as Record<string, unknown>
+  for (const key of ['id', 'author', 'timestamp', 'body']) {
+    if (typeof c[key] !== 'string') {
+      throw new Error(`${path}.${key}: expected string, got ${typeof c[key]}`)
+    }
+  }
+  for (const key of ['likes', 'dislikes', 'replyCount']) {
+    if (typeof c[key] !== 'number' || Number.isNaN(c[key] as number)) {
+      throw new Error(`${path}.${key}: expected number, got ${typeof c[key]}`)
+    }
+  }
+  if (c.title !== undefined && typeof c.title !== 'string') {
+    throw new Error(`${path}.title: expected string|undefined`)
+  }
+  if (c.replies !== undefined) {
+    if (!Array.isArray(c.replies)) throw new Error(`${path}.replies: expected array`)
+    if ((c.replies as unknown[]).length !== c.replyCount) {
+      throw new Error(
+        `${path}: replyCount (${c.replyCount}) ≠ replies.length (${(c.replies as unknown[]).length})`,
+      )
+    }
+    for (let i = 0; i < (c.replies as unknown[]).length; i++) {
+      validateComment((c.replies as unknown[])[i], `${path}.replies[${i}]`)
+    }
+  }
+}
+
+function validateArticleRef(v: unknown, path: string): void {
+  if (typeof v !== 'object' || v === null) throw new Error(`${path}: expected object`)
+  const a = v as Record<string, unknown>
+  for (const key of ['id', 'url', 'title', 'author', 'publishedAt']) {
+    if (typeof a[key] !== 'string') {
+      throw new Error(`${path}.${key}: expected string, got ${typeof a[key]}`)
+    }
+  }
+  if (a.source !== 'ynet') {
+    throw new Error(`${path}.source: expected 'ynet', got ${JSON.stringify(a.source)}`)
+  }
+}
+
+// --- Comment expansion (unchanged from task 26) ---
 
 async function openCommentsPopup(page: Page): Promise<void> {
   const INLINE_L1 = 'section#SiteArticleComments article.ArticleComment2026.level1'
@@ -184,6 +395,8 @@ async function expandReplies(page: Page): Promise<number> {
   return expanded
 }
 
+// --- Main ---
+
 async function scrape(articleUrl: string): Promise<void> {
   console.log(`Navigating to: ${articleUrl}`)
 
@@ -205,48 +418,48 @@ async function scrape(articleUrl: string): Promise<void> {
     const repliesExpanded = await expandReplies(page)
     console.log(`Reply threads expanded: ${repliesExpanded}`)
 
-    const topLevel = await page.locator(LEVEL1).count()
-    const replies = await page.locator(LEVEL2).count()
-    console.log(`Top-level comments: ${topLevel}`)
-    console.log(`Replies: ${replies}`)
-    console.log(`Total visible comments: ${topLevel + replies}`)
+    const domTopLevel = await page.locator(LEVEL1).count()
+    const domReplies = await page.locator(LEVEL2).count()
+    console.log(`DOM count: ${domTopLevel} top-level + ${domReplies} replies = ${domTopLevel + domReplies}`)
 
+    // Task 28: extract article metadata
+    const articleRef = await extractArticleRef(page, articleUrl)
+    console.log(`\nArticleRef: "${articleRef.title}" by ${articleRef.author}`)
+
+    // Task 29: capture comments and map to Post[]
     await net.flush()
-    let result: CaptureResult
-    const netItems = net.items()
+    const baseUrl = net.baseUrl()
+    let posts: ReturnType<typeof mapApiToPosts>
+    let strategy: string
 
-    if (netItems.length > 0) {
-      result = {
-        strategy: 'network',
-        items: netItems,
-        endpointPattern: net.endpoint()!,
-      }
+    if (baseUrl) {
+      strategy = 'network'
+      const apiItems = await fetchAllComments(page, baseUrl)
+      posts = mapApiToPosts(apiItems, articleRef)
+      console.log(`\nStrategy: network (active pagination)`)
+      console.log(`Endpoint: ${baseUrl}/{offset}`)
     } else {
-      console.log('\nNetwork interception captured nothing — falling back to DOM parsing')
-      result = { strategy: 'dom', items: await captureFromDom(page) }
+      strategy = 'dom'
+      console.log('\nNetwork interception found no talkback endpoint — falling back to DOM')
+      const domItems = await captureFromDom(page)
+      posts = mapDomToPosts(domItems, articleRef)
+      console.log(`Strategy: DOM fallback`)
     }
 
-    console.log('\n--- Capture results ---')
-    console.log(`Strategy: ${result.strategy}`)
-    if (result.strategy === 'network') {
-      console.log(`Endpoint pattern: ${result.endpointPattern}`)
-    }
-    console.log(`Captured: ${result.items.length} comments`)
-    console.log(`Expected (DOM count): ${topLevel + replies}`)
-
-    if (result.items.length > 0) {
-      console.log('\nSample raw comment:')
-      console.log(JSON.stringify(result.items[0], null, 2))
-    }
+    console.log(`Posts: ${posts.length} (top-level comments → posts)`)
 
     const feed = {
       generatedAt: new Date().toISOString(),
-      posts: [] as unknown[],
+      posts,
     }
 
-    const outPath = resolve(__dirname, '..', 'data', 'feed.json')
-    writeFileSync(outPath, JSON.stringify(feed, null, 2) + '\n')
-    console.log(`\nWrote stub feed to ${outPath}`)
+    writeFileSync(OUT_PATH, JSON.stringify(feed, null, 2) + '\n')
+    console.log(`Wrote ${OUT_PATH}`)
+
+    // Validate: read back the file and run the same shape checks as loadFeed
+    const written = JSON.parse(readFileSync(OUT_PATH, 'utf-8'))
+    validateFeedShape(written)
+    console.log(`Feed validated OK (${strategy}, ${posts.length} posts)`)
   } finally {
     await browser.close()
   }

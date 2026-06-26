@@ -1,4 +1,414 @@
 {
-  "generatedAt": "2026-06-26T08:39:38.921Z",
-  "posts": []
+  "generatedAt": "2026-06-26T21:22:31.262Z",
+  "posts": [
+    {
+      "comment": {
+        "id": "99856041",
+        "author": "אבי",
+        "timestamp": "2026-06-18T15:46:43.000000Z",
+        "body": "ביבי הוא אפס אחד גדול.. אסון לאומי היה ברור שאי אפשר לסמוך על טארפ ובטח לא לסמוך על נתניהו ",
+        "likes": 51,
+        "dislikes": 12,
+        "replyCount": 4,
+        "replies": [
+          {
+            "id": "99856145",
+            "author": "אנונימי",
+            "timestamp": "2026-06-18T15:56:20.000000Z",
+            "body": "ביבי אמנם אסון אבל טראמפ אסון גדול אפילו יותר",
+            "likes": 16,
+            "dislikes": 1,
+            "replyCount": 0
+          },
+          {
+            "id": "99856738",
+            "author": "ישראל",
+            "timestamp": "2026-06-18T16:53:11.000000Z",
+            "body": "הביבי הוא עירום גם",
+            "likes": 9,
+            "dislikes": 0,
+            "replyCount": 0
+          },
+          {
+            "id": "99858182",
+            "author": "קרן צבי",
+            "timestamp": "2026-06-18T19:11:56.000000Z",
+            "body": "אז על מי לסמוך ?על אחד שגם כרמטכל לא היה מציאה",
+            "likes": 1,
+            "dislikes": 2,
+            "replyCount": 0
+          },
+          {
+            "id": "99858205",
+            "author": "יעל",
+            "timestamp": "2026-06-18T19:16:03.000000Z",
+            "body": "וביבי מה היה?? סוכן רהיטים?? ",
+            "likes": 2,
+            "dislikes": 0,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99855961",
+        "author": "חחחחחח",
+        "timestamp": "2026-06-18T15:38:12.000000Z",
+        "body": "שמישהו יגיד לו המלך עירום (טיפש גמור(",
+        "likes": 47,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856007",
+        "author": "מה חשבתם",
+        "timestamp": "2026-06-18T15:43:04.000000Z",
+        "body": "בקורונה הוא הציע לשתות אקונומיקה",
+        "likes": 38,
+        "dislikes": 3,
+        "replyCount": 2,
+        "replies": [
+          {
+            "id": "99858173",
+            "author": "קרן צבי",
+            "timestamp": "2026-06-18T19:11:05.000000Z",
+            "body": "שקר שמאלני אין לכם גבול הה?ביבי הביא חיסונים הכי מהר בעולם",
+            "likes": 1,
+            "dislikes": 3,
+            "replyCount": 0
+          },
+          {
+            "id": "99860278",
+            "author": "טט",
+            "timestamp": "2026-06-19T02:55:57.000000Z",
+            "body": "זה לא היה ביבי, זה היה הטמבל השני",
+            "likes": 0,
+            "dislikes": 0,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856155",
+        "author": "ס.ט",
+        "timestamp": "2026-06-18T15:57:16.000000Z",
+        "body": "טרמפ הוא צמבליין  החדש  שמנופף בהסכם הכניעה  כאילו זה הישג,והמחרב וההורס שלנו נגרר אחריו  כנוע ומכשכש בזנב",
+        "likes": 34,
+        "dislikes": 2,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856252",
+        "author": "ירין",
+        "timestamp": "2026-06-18T16:09:33.000000Z",
+        "body": "האירנים ישתינו על טראמפ לפני כל העולם. הוא יחזור לחיק נצניהו מבויש ומבועת",
+        "likes": 27,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856125",
+        "author": "ארז",
+        "timestamp": "2026-06-18T15:54:28.000000Z",
+        "body": "אפילו התגובה שלו זה של ילד כאפות, אבל העיקר שדוני חושב שהוא ניצח, פאק להיות אזרח ארהב וזה הנשיא הרופס שלך? כמעט גרוע כמו ראש ממשלה שהפקיר את האזרחים שלו להשחט ומאז לא מפסיק להיות לוזר בכל חזית, הצבא מביא נצחונות והשמוק מוביל להפסדים, עילוי",
+        "likes": 23,
+        "dislikes": 4,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856206",
+        "author": "יודקה",
+        "timestamp": "2026-06-18T16:02:58.000000Z",
+        "body": "כל ניסיון להסביר את צעדי טראמפ מבלי להתיחס קודם כל לנפשו המסוכסכת (הגדרה מינימלית...\n\n\n\n\n\n\n\n\n\n\n\nכל ניסיון להבין או להסביר את מדיניותו של טראמפ מבלי להתיחס לנפשו המסוכסכת הגדרה מינימלית......\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nכל ניסיון להסביר או להבין את צעדיו של טראמפ מבלי להתיחס קודם כל לנפשו המסוכסכת הגדרה מינמלית- לוקה מאוד בחסר\n",
+        "likes": 18,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856330",
+        "author": "אייל",
+        "timestamp": "2026-06-18T16:16:51.000000Z",
+        "body": "מה ביבי לא הולך לנאום בקונגרס שוב? חחחחחחחחחחחחחחחחחחחח. ",
+        "likes": 15,
+        "dislikes": 0,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99856158",
+        "author": "להדיח את היועמשית",
+        "timestamp": "2026-06-18T15:57:40.000000Z",
+        "body": "למה לא העירו את ביבי ",
+        "likes": 19,
+        "dislikes": 4,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99857176",
+        "author": "מאיר",
+        "timestamp": "2026-06-18T17:28:08.000000Z",
+        "body": "ביבי לוזר. נקודה. \nכפסע מללכת הביתה. ",
+        "likes": 14,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99857227",
+        "author": "פול דיראק",
+        "timestamp": "2026-06-18T17:32:32.000000Z",
+        "body": "כל סיפור הגרעין האירני הוא המצאה של נהנתניהו, שרכב עליה עשרות שנים ועשה ממנה קריירה. ",
+        "likes": 9,
+        "dislikes": 3,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99857800",
+        "author": "גוטליפ. טולילה",
+        "timestamp": "2026-06-18T18:30:07.000000Z",
+        "body": "השקרן השנוא ממשיך עם השקרים טראמפ לא סופר אותו יותר ויחד איתו כל הכוורת סביבו,השקרן התחיל לספור ימיו",
+        "likes": 5,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99858111",
+        "author": "ברדוגית",
+        "timestamp": "2026-06-18T19:02:01.000000Z",
+        "body": "אין מצב שגם הנדיא וגם כל יועציו כאלו טיפשים ,חלשים ועלובים. הברירה שנותרה היא שמישהו או הם קיבלו פה מילארדים מתחת לשולחן...",
+        "likes": 2,
+        "dislikes": 0,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99858218",
+        "author": "רפובליקנים יוק",
+        "timestamp": "2026-06-18T19:18:11.000000Z",
+        "body": "הדמוקרטים יביאו גבר לבן נוצרי קצת משכיל שיתחרה ברפובליקנים לנישות ויקח בענק לא רק הדלק המכס על המוצרים באמריקה גורם להם לשלם על הכל יקר בזמן שטראמפ מבזבז הון עתק על שטויות",
+        "likes": 1,
+        "dislikes": 0,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99864864",
+        "author": "רון",
+        "timestamp": "2026-06-19T10:08:21.000000Z",
+        "body": "זה מה שקורה כשהמנהיגים סומכים על מטורף.",
+        "likes": 0,
+        "dislikes": 0,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99858315",
+        "author": "שמאלני מזוקק",
+        "timestamp": "2026-06-18T19:28:46.000000Z",
+        "body": "כל טמבלי השמאל  מנסים להשיג עוד מנדטים אבל עדיין לא הפנימו כי לא משנה מה יהיה בין טאאמפ לביבי  תמיד הנאמנות  לאיש תהיה מעל הכל \nבשמאל הנאמנות היא חסרת ערך מיסודה \nלכן קל להם למכור את חלקי ארץ ישראל בקלות \nאוסיף ואומר\nכשאין לשמאל  שורשים יהודיים  תנכיים  מסורתיים לעולם יהיו עוברי אורח במדינה",
+        "likes": 1,
+        "dislikes": 2,
+        "replyCount": 1,
+        "replies": [
+          {
+            "id": "99858358",
+            "author": "ליכודניק שפוי",
+            "timestamp": "2026-06-18T19:33:24.000000Z",
+            "body": "נכון וכמו החלילן מהמלין תלכו אחרי השקרן הקיסרי לתהום.הבעיה שכולנו ניפול",
+            "likes": 1,
+            "dislikes": 0,
+            "replyCount": 0
+          }
+        ]
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    },
+    {
+      "comment": {
+        "id": "99860273",
+        "author": "מוישה ",
+        "timestamp": "2026-06-19T02:54:37.000000Z",
+        "body": "השנאה לביבי הפכה לעצב ופחד קיומי. ",
+        "likes": 0,
+        "dislikes": 1,
+        "replyCount": 0
+      },
+      "quoted": {
+        "id": "sywkiqzmgx",
+        "url": "https://www.ynet.co.il/news/article/sywkiqzmgx",
+        "title": "\"קנאים או טיפשים\": תגובת טראמפ לביקורת מבית, וניסיון ההשפעה של נתניהו",
+        "source": "ynet",
+        "author": "ליאור בן ארי",
+        "publishedAt": "2026-06-18T15:11:15.475414Z",
+        "imageUrl": "https://ynet-pic1.yit.co.il/picserver6/crop_images/2026/06/18/BJOgm4WzGl/BJOgm4WzGl_238_99_492_277_0_large.jpg"
+      }
+    }
+  ]
 }
