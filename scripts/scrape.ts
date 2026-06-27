@@ -2,10 +2,14 @@ import { chromium, type Page } from 'playwright'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { config } from 'dotenv'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = resolve(__dirname, '..')
 const OUT_PATH = resolve(PROJECT_ROOT, 'data', 'feed.json')
+
+config({ path: resolve(PROJECT_ROOT, '.env') })
 
 // --- Selectors ---
 
@@ -349,6 +353,178 @@ function getCommentId(post: unknown): string | undefined {
   return typeof id === 'string' ? id : undefined
 }
 
+// --- Gemini humor scoring ---
+
+type MappedComment = { id: string; author: string; body: string; humor?: number; humorReason?: string; replies?: MappedComment[] }
+
+function collectUnscoredComments(posts: { comment: MappedComment }[]): MappedComment[] {
+  const out: MappedComment[] = []
+  for (const p of posts) {
+    if (p.comment.humor === undefined) out.push(p.comment)
+    if (p.comment.replies) {
+      for (const r of p.comment.replies) {
+        if (r.humor === undefined) out.push(r)
+      }
+    }
+  }
+  return out
+}
+
+function buildScoringPrompt(headline: string, comments: MappedComment[]): string {
+  const items = comments.map(c => ({ id: c.id, author: c.author, text: c.body }))
+  return `You are scoring Israeli Ynet talkback comments for how funny, entertaining, or
+interesting they are. You understand Israeli internet culture deeply.
+
+Score each comment 0–10.
+
+HIGH scores (7–10) — comments with a VOICE:
+- Punchy blunt dismissals that are funny BECAUSE of their brevity and attitude
+  ("שטויות", "המלך עירום (טיפש גמור)")
+- Username + comment combo where the name IS part of the joke
+  (חחחחחחחח posting insults, תחי מדינת ישראל complaining sarcastically)
+- Sardonic Israeli social commentary, dark humor, accidental poetry
+- "Aunt/uncle internet energy" — unselfconscious, חחחח-punctuated, rambling
+- Political humor that's blunt, not earnest
+- Comments where you can HEAR the specific person behind it
+
+MEDIUM scores (3–6) — borderline, some personality:
+- Genuine personal reviews with real detail (not great humor but a real person talking)
+- Mild observations that aren't generic but aren't sharp either
+- Comments with personality but low entertainment value
+
+LOW scores (0–2) — truly personality-free filler:
+- Bot-like: "מומלץ!", "👍👍👍", "נכון מאוד", "מסכים"
+- Copy-paste political manifestos (earnest, no humor)
+- Zero voice — could be written by literally anyone
+
+Score the following comments on this article. Respond ONLY with a JSON array.
+
+Article: ${headline}
+
+Comments:
+${JSON.stringify(items)}
+
+Response format: [{"id": "...", "score": N, "reason": "one sentence Hebrew"}]`
+}
+
+async function scoreWithGemini(
+  headline: string,
+  comments: MappedComment[],
+): Promise<Map<string, { score: number; reason: string }>> {
+  const results = new Map<string, { score: number; reason: string }>()
+
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) {
+    console.warn('\n⚠ GEMINI_API_KEY not set — skipping humor scoring')
+    return results
+  }
+
+  if (comments.length === 0) {
+    console.log('\nNo unscored comments — skipping Gemini call')
+    return results
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey)
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    generationConfig: {
+      responseMimeType: 'application/json',
+    },
+  })
+
+  const BATCH_SIZE = 50
+  for (let i = 0; i < comments.length; i += BATCH_SIZE) {
+    const batch = comments.slice(i, i + BATCH_SIZE)
+    const batchNum = Math.floor(i / BATCH_SIZE) + 1
+    const totalBatches = Math.ceil(comments.length / BATCH_SIZE)
+    if (totalBatches > 1) {
+      console.log(`  Scoring batch ${batchNum}/${totalBatches} (${batch.length} comments)...`)
+    }
+
+    const prompt = buildScoringPrompt(headline, batch)
+    let retries = 0
+
+    while (retries < 2) {
+      try {
+        const result = await model.generateContent(prompt)
+        const text = result.response.text()
+        const parsed: unknown = JSON.parse(text)
+
+        if (!Array.isArray(parsed)) {
+          console.warn('  Gemini returned non-array — skipping batch')
+          break
+        }
+
+        for (const item of parsed) {
+          if (typeof item !== 'object' || item === null) continue
+          const r = item as Record<string, unknown>
+          if (typeof r.id !== 'string' || typeof r.score !== 'number') continue
+          const score = Math.max(0, Math.min(10, Math.round(r.score as number)))
+          const reason = typeof r.reason === 'string' ? r.reason : ''
+          results.set(r.id, { score, reason })
+        }
+        break
+      } catch (err: unknown) {
+        retries++
+        if (retries < 2) {
+          console.warn(`  Gemini API error (retrying in 2s):`, err instanceof Error ? err.message : err)
+          await new Promise(r => setTimeout(r, 2000))
+        } else {
+          console.warn('  Gemini API failed after retry — skipping batch:', err instanceof Error ? err.message : err)
+        }
+      }
+    }
+  }
+
+  return results
+}
+
+function applyScores(
+  posts: { comment: MappedComment }[],
+  scores: Map<string, { score: number; reason: string }>,
+): void {
+  for (const p of posts) {
+    const s = scores.get(p.comment.id)
+    if (s) {
+      p.comment.humor = s.score
+      p.comment.humorReason = s.reason
+    }
+    if (p.comment.replies) {
+      for (const r of p.comment.replies) {
+        const rs = scores.get(r.id)
+        if (rs) {
+          r.humor = rs.score
+          r.humorReason = rs.reason
+        }
+      }
+    }
+  }
+}
+
+function logScoreSummary(scores: Map<string, { score: number; reason: string }>, posts: { comment: MappedComment }[]): void {
+  if (scores.size === 0) return
+
+  const nameMap = new Map<string, string>()
+  for (const p of posts) {
+    nameMap.set(p.comment.id, p.comment.author)
+    if (p.comment.replies) {
+      for (const r of p.comment.replies) nameMap.set(r.id, r.author)
+    }
+  }
+
+  const sorted = [...scores.entries()]
+    .map(([id, s]) => ({ author: nameMap.get(id) ?? id, ...s }))
+    .sort((a, b) => b.score - a.score)
+
+  console.log(`\nScored ${sorted.length} comments.`)
+  console.log(`  Top 3: ${sorted.slice(0, 3).map(s => `${s.author}: ${s.score}`).join(', ')}`)
+  console.log(`  Bottom 3: ${sorted.slice(-3).map(s => `${s.author}: ${s.score}`).join(', ')}`)
+  console.log(`  Full list:`)
+  for (const s of sorted) {
+    console.log(`    ${s.author}: ${s.score} — ${s.reason}`)
+  }
+}
+
 // --- Comment expansion (unchanged from task 26) ---
 
 async function openCommentsPopup(page: Page): Promise<void> {
@@ -483,6 +659,16 @@ async function scrape(articleUrl: string): Promise<void> {
       existingPosts.map(getCommentId).filter((id): id is string => id !== undefined),
     )
     const newPosts = posts.filter(p => !existingIds.has(p.comment.id))
+
+    // Gemini humor scoring: score new comments before merging
+    const unscored = collectUnscoredComments(newPosts)
+    if (unscored.length > 0) {
+      console.log(`\nScoring ${unscored.length} unscored comments with Gemini...`)
+      const scores = await scoreWithGemini(articleRef.title, unscored)
+      applyScores(newPosts, scores)
+      logScoreSummary(scores, newPosts)
+    }
+
     const mergedPosts = [...existingPosts, ...newPosts]
 
     console.log(
