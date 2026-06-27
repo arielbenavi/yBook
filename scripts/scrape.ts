@@ -387,15 +387,24 @@ HIGH scores (7–10) — comments with a VOICE:
 - Political humor that's blunt, not earnest
 - Comments where you can HEAR the specific person behind it
 
+IMPORTANT — username matters A LOT:
+- A funny, esoteric, or self-aware username (שמאלני מזוקק, רפובליקנים יוק, ברדוגית)
+  elevates the ENTIRE comment by 2–3 points. The username IS a voice.
+- Even a political rant becomes entertaining when delivered by a character with a
+  memorable name — it's performance, not a manifesto.
+- A bland username (אנונימי, ישראלי) contributes nothing but doesn't penalize.
+
 MEDIUM scores (3–6) — borderline, some personality:
 - Genuine personal reviews with real detail (not great humor but a real person talking)
 - Mild observations that aren't generic but aren't sharp either
-- Comments with personality but low entertainment value
+- Political opinions WITH personality — a punchy landing, conspiracy-uncle energy,
+  or dramatic flair ("מיליארדים מתחת לשולחן...")
 
-LOW scores (0–2) — truly personality-free filler:
+LOW scores (0–2) — truly personality-free filler ONLY:
 - Bot-like: "מומלץ!", "👍👍👍", "נכון מאוד", "מסכים"
-- Copy-paste political manifestos (earnest, no humor)
-- Zero voice — could be written by literally anyone
+- GENERIC political takes with NO voice — interchangeable text any anonymous person could
+  have written, with a bland username, no punch, no personality
+- Zero voice — could be written by literally anyone about literally anything
 
 Score the following comments on this article. Respond ONLY with a JSON array.
 
