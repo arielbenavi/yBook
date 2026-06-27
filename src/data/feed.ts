@@ -62,6 +62,12 @@ function checkComment(v: unknown, path: string): Comment {
   const replyCount = requireNumber(v, 'replyCount', path)
   const title = optionalString(v, 'title', path)
   const score = optionalNumber(v, 'score', path)
+  const humor = optionalNumber(v, 'humor', path)
+  const humorReason = optionalString(v, 'humorReason', path)
+
+  if (humor !== undefined && (humor < 0 || humor > 10)) {
+    throw new FeedShapeError(`${path}.humor: expected 0–10, got ${humor}`)
+  }
 
   let replies: Comment[] | undefined
   if (v.replies !== undefined) {
@@ -76,7 +82,7 @@ function checkComment(v: unknown, path: string): Comment {
     }
   }
 
-  return { id, author, timestamp, title, body, likes, dislikes, replyCount, replies, score }
+  return { id, author, timestamp, title, body, likes, dislikes, replyCount, replies, score, humor, humorReason }
 }
 
 function checkArticleRef(v: unknown, path: string): ArticleRef {

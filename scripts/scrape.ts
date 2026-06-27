@@ -294,6 +294,17 @@ function validateComment(v: unknown, path: string): void {
   if (c.title !== undefined && typeof c.title !== 'string') {
     throw new Error(`${path}.title: expected string|undefined`)
   }
+  if (c.humor !== undefined) {
+    if (typeof c.humor !== 'number' || Number.isNaN(c.humor as number)) {
+      throw new Error(`${path}.humor: expected number|undefined`)
+    }
+    if ((c.humor as number) < 0 || (c.humor as number) > 10) {
+      throw new Error(`${path}.humor: expected 0–10, got ${c.humor}`)
+    }
+  }
+  if (c.humorReason !== undefined && typeof c.humorReason !== 'string') {
+    throw new Error(`${path}.humorReason: expected string|undefined`)
+  }
   if (c.replies !== undefined) {
     if (!Array.isArray(c.replies)) throw new Error(`${path}.replies: expected array`)
     if ((c.replies as unknown[]).length !== c.replyCount) {

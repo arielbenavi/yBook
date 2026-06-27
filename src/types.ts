@@ -12,6 +12,8 @@ export type Comment = {
   replyCount: number
   replies?: Comment[]     // nested, same shape
   score?: number          // computed, not stored
+  humor?: number          // 0–10, from Gemini scoring
+  humorReason?: string    // one-sentence Hebrew explanation
 }
 
 export type ArticleRef = {
