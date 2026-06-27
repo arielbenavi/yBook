@@ -110,15 +110,15 @@ Scraper code in `scripts/`, never imported by the app.
 
 ## Acceptance criteria (testable)
 
-- [ ] `npm i && npm run dev` runs with **zero console errors**.
-- [ ] Feed renders Posts from `data/feed.json`; each PostCard shows the comment as the post
+- [x] `npm i && npm run dev` runs with **zero console errors**.
+- [x] Feed renders Posts from `data/feed.json`; each PostCard shows the comment as the post
       and the article as a quoted card beneath it.
-- [ ] All three sorts (Top / Newest / Most discussed) work and visibly reorder the feed.
-- [ ] Replies expand and collapse inline.
-- [ ] Layout is correct in RTL on both mobile (~380px) and desktop widths.
-- [ ] `scoreComment` is unit-tested and isolated; swapping it changes ranking only.
-- [ ] `npm run scrape -- <ynetArticleUrl>` produces a valid `data/feed.json` the app renders.
-- [ ] `npm run typecheck`, `npm run lint`, and `npm run test` all pass.
+- [x] All three sorts (Top / Newest / Most discussed) work and visibly reorder the feed.
+- [x] Replies expand and collapse inline.
+- [x] Layout is correct in RTL on both mobile (~380px) and desktop widths.
+- [x] `scoreComment` is unit-tested and isolated; swapping it changes ranking only.
+- [x] `npm run scrape -- <ynetArticleUrl>` produces a valid `data/feed.json` the app renders.
+- [x] `npm run typecheck`, `npm run lint`, and `npm run test` all pass.
 
 ---
 
@@ -170,7 +170,7 @@ Scraper code in `scripts/`, never imported by the app.
 - [x] 29. Map raw → `Post[]`, write `data/feed.json`: wrap each top-level comment as a `Post` quoting the article, include nested replies, validate output with the same shape check the app uses. End-to-end: `npm run scrape -- <url>` produces a feed the app renders without changes.
 
 ### Phase 7 — Docs
-- [ ] 30. README: how to run, how to scrape, how to swap the scoring function, project structure overview.
+- [x] 30. README: how to run, how to scrape, how to swap the scoring function, project structure overview.
 
 ---
 
@@ -205,3 +205,4 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-26 — Task 26: Expand all comments. Key discovery: Ynet's inline comment section is a preview (2 comments); clicking `span.commentsContainer` opens `section#ArticleCommentsPopup` where all comments load. The popup auto-expands reply threads. Three expansion functions: `openCommentsPopup` (waits for inline section JS to init, clicks container, waits for popup DOM), `expandShowMore` (clicks `div.showMoreCommentsButton` in a loop, waits for level1 count to grow, 50-click safety cap), `expandReplies` (clicks `button.commentCount` via JS evaluate to avoid viewport issues, re-clicks if toggle collapsed already-visible replies). Verified against sywkiqzmgx: 17 top-level + 7 replies = 24 total, matching "24 תגובות".
 - 2026-06-26 — Task 27: Capture comment data via network interception + DOM fallback. Primary path: `setupInterception()` registers `page.on('response')` before navigation, captures all `/api/talkbacks/` JSON responses, deduplicates by comment `id`. Endpoint pattern: `.../talkbacks/list/v2/{slug}/{sort}/{offset}`. Async response parsing tracked via pending-promise array with `flush()` to guarantee all JSON is parsed before reading. Fallback: `captureFromDom()` scrapes the expanded popup using `data-comment-id`, `span.author`, `time.DateDisplay`, `span.likesCounter` selectors. API item has 14 fields (id, author, pubDate, text, level, likes, unlikes, talkback_like, talkback_parent_id, article_id, recommended, authorLocation, number, post_id) — no separate `title` field (all text in `text`). Verified: network path captures 24/24 comments, sample logged.
 - 2026-06-27 — Tasks 28+29: ArticleRef extraction + mapping + feed.json output. Task 28: `extractArticleRef()` reads `og:title`, `og:image`, `og:url`, `article:published_time`, `vr:author` via `page.evaluate`; derives slug id from URL path. Task 29: Interception refactored from passive capture to active pagination — `setupInterception` now only discovers the API base URL, then `fetchAllComments()` loops offset 0..N until `hasMore === 0` (2 pages for sywkiqzmgx: offset 0 returns first discussion, offset 1 returns all 24). `mapApiToPosts` groups level-2 replies by `talkback_parent_id.talkbackId`, nests under parent, sets `replyCount = replies.length`. `mapDomToPosts` groups by DOM order (level-2 after their parent level-1). `validateFeedShape` mirrors the app's `checkFeed` chain (string/number checks, replyCount ↔ replies.length, source === 'ynet'). Reads written file back and validates. End-to-end: 17 posts written (17 top-level, 7 replies nested), `loadFeed()` validates, `npm run dev` renders the feed with real article image, author "ליאור בן ארי", all three sorts working.
+- 2026-06-27 — Task 30: README.md. Quick start, scraping instructions (with `npx playwright install chromium` first-time step), scoring swap guide pointing to `src/scoring/scoreComment.ts`, project structure tree, stack table, npm scripts table. Under 80 lines. All 8 acceptance criteria checked off — project complete.
