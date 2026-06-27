@@ -8,6 +8,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const PROJECT_ROOT = resolve(__dirname, '..')
 const OUT_PATH = resolve(PROJECT_ROOT, 'data', 'feed.json')
+const PUBLIC_PATH = resolve(PROJECT_ROOT, 'public', 'feed.json')
 
 config({ path: resolve(PROJECT_ROOT, '.env') })
 
@@ -692,8 +693,10 @@ async function scrape(articleUrl: string): Promise<void> {
       posts: mergedPosts,
     }
 
-    writeFileSync(OUT_PATH, JSON.stringify(feed, null, 2) + '\n')
-    console.log(`Wrote ${OUT_PATH}`)
+    const json = JSON.stringify(feed, null, 2) + '\n'
+    writeFileSync(OUT_PATH, json)
+    writeFileSync(PUBLIC_PATH, json)
+    console.log(`Wrote ${OUT_PATH} + ${PUBLIC_PATH}`)
 
     // Validate: read back the file and run the same shape checks as loadFeed
     const written = JSON.parse(readFileSync(OUT_PATH, 'utf-8'))

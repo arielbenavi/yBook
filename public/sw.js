@@ -20,7 +20,7 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url)
 
-  if (url.pathname === '/data/feed.json' || url.pathname.endsWith('feed.json')) {
+  if (url.pathname === '/feed.json' || url.pathname.endsWith('feed.json')) {
     e.respondWith(
       fetch(e.request)
         .then((resp) => {

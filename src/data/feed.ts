@@ -1,11 +1,4 @@
-// The one place the app reads feed data. Phase 6 swaps the JSON import for a
-// fetched/live source without changing the public surface (loadFeed → Promise<Feed>).
-//
-// We validate at module load so a bad shape fails the app immediately rather than
-// surfacing as a render-time crash deep inside a component.
-
 import type { ArticleRef, Comment, Feed, Post } from '../types'
-import rawFeed from '../../data/feed.json'
 
 export class FeedShapeError extends Error {
   constructor(message: string) {
@@ -123,11 +116,10 @@ function checkFeed(v: unknown): Feed {
   }
 }
 
-// Eagerly validate at import time: an unparseable feed should fail the app, not the render.
-const validated: Feed = checkFeed(rawFeed)
-
-// Async on purpose. Today this is a static import; Phase 6 will swap the body for a fetch
-// without changing the signature, so callers (and their loading-state UI) never have to move.
 export async function loadFeed(): Promise<Feed> {
-  return validated
+  const resp = await fetch('/feed.json')
+  if (!resp.ok) {
+    throw new FeedShapeError(`Failed to load feed: ${resp.status}`)
+  }
+  return checkFeed(await resp.json())
 }
