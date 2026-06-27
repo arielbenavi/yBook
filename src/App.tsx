@@ -4,6 +4,7 @@ import EmptyState from './components/EmptyState'
 import ErrorState from './components/ErrorState'
 import FeedList from './components/FeedList'
 import FeedSkeleton from './components/FeedSkeleton'
+import InstallPrompt from './components/InstallPrompt'
 import SortToggle from './components/SortToggle'
 import { loadFeed } from './data/feed'
 import { HUMOR_THRESHOLD } from './scoring/humorThreshold'
@@ -81,6 +82,7 @@ function App() {
           <ErrorState message={feed.error.message} onRetry={handleRetry} />
         )}
       </div>
+      <InstallPrompt />
     </AppShell>
   )
 }
