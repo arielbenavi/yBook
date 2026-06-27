@@ -387,12 +387,14 @@ HIGH scores (7–10) — comments with a VOICE:
 - Political humor that's blunt, not earnest
 - Comments where you can HEAR the specific person behind it
 
-IMPORTANT — username matters A LOT:
-- A funny, esoteric, or self-aware username (שמאלני מזוקק, רפובליקנים יוק, ברדוגית)
-  elevates the ENTIRE comment by 2–3 points. The username IS a voice.
-- Even a political rant becomes entertaining when delivered by a character with a
-  memorable name — it's performance, not a manifesto.
-- A bland username (אנונימי, ישראלי) contributes nothing but doesn't penalize.
+USERNAME AWARENESS:
+- Consider the username as CONTEXT, not an automatic bonus. A funny or esoteric username
+  (שמאלני מזוקק, רפובליקנים יוק, ברדוגית) makes a comment more entertaining IF the
+  comment itself has some voice too. Username alone doesn't make a 10.
+- A great username + bland generic text = 4–5 (username carries it slightly)
+- A great username + punchy/funny text = 7–9 (the combo lands)
+- A bland username + funny text = 7–8 (the text carries itself)
+- A bland username + bland text = 0–2 (nothing there)
 
 MEDIUM scores (3–6) — borderline, some personality:
 - Genuine personal reviews with real detail (not great humor but a real person talking)
