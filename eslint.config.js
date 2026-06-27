@@ -33,4 +33,11 @@ export default [
       globals: globals.node,
     },
   },
+  {
+    files: ['public/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.serviceworker,
+    },
+  },
 ]

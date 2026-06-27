@@ -179,6 +179,7 @@ Scraper code in `scripts/`, never imported by the app.
 - [x] 34. Humor badge + opacity: color-scaled badge per PostCard (7–10 brand/coral, 3–6 neutral, 0–2 ink-subtle). humorReason on hover. Below-threshold (5) comments at 50% opacity with "נסתר" chip.
 - [x] 35. Filter toggle + sort: "הכל" / "מצחיק בלבד" toggle (default = funny only). 4th sort mode "מצחיק" sorting by humor desc. Threshold (5) as named constant in src/scoring/.
 - [x] 36. README update: GEMINI_API_KEY setup, humor scoring explanation, filter usage.
+- [x] 37. PWA manifest + service worker for iOS "Add to Home Screen". manifest.json (standalone, RTL, coral theme), icon generation (192 + 512), Apple meta tags, service worker (cache-first assets, network-first feed.json), README update.
 
 ---
 
@@ -222,3 +223,4 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-27 — Task 35: Filter toggle + "מצחיק" sort. SortToggle gains a 4th sort option "מצחיק" (humor desc, score tiebreak) and a separate "הכל" / "מצחיק בלבד" toggle button (default = funny only). App.tsx adds funnyOnly state (default true) and a filtered memo that drops below-threshold posts when active. Browser-verified: filter toggles 16↔17 posts, sort by מצחיק puts ברדוגית/שמאלני מזוקק (10) on top, אבי (humor=2) shows "נסתר" chip.
 - 2026-06-27 — Prompt calibration v2: replaced "username matters A LOT" with USERNAME AWARENESS — username as context not automatic bonus, with explicit score ranges for each username+text combination.
 - 2026-06-27 — Task 36: README rewrite. Covers: concept (quote-tweet for Ynet comments), architecture (scraper → Gemini scoring → React UI), quick start, scraping with append mode + GEMINI_API_KEY setup, humor scoring methodology with Hebrew examples and score table, UI features (4 sorts, filter toggle, humor badges, opacity treatment), tuning knobs (score formula, threshold, Gemini prompt), project structure, stack, scripts. 130 lines, English.
+- 2026-06-28 — Task 37: PWA manifest + service worker. `public/manifest.json` (standalone, RTL he, coral theme, paper background), icons generated via Playwright (192×192 + 512×512 coral-on-paper wordmark PNGs), Apple meta tags in index.html (web-app-capable, touch-icon, theme-color), `public/sw.js` (cache-first for assets, network-first for feed.json, old-cache cleanup on activate), registered in main.tsx. ESLint config extended with `globals.serviceworker` for `public/**/*.js`. README "Mobile (PWA)" section added. Build passes.

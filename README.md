@@ -106,6 +106,14 @@ Three knobs, all independent:
    The prompt defines what scores high vs. low. Edit it, clear `data/feed.json`,
    and re-scrape to re-score everything.
 
+## Mobile (PWA)
+
+yBook is installable as a Progressive Web App. On iOS Safari, tap the share
+button → "Add to Home Screen." On Android Chrome, tap the menu → "Install app."
+The app launches in standalone mode (no browser chrome) with a coral status bar
+and the yBook icon. A service worker caches the app shell for offline launch;
+feed data uses network-first so freshly scraped content appears immediately.
+
 ## Project structure
 
 ```
