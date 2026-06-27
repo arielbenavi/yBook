@@ -178,7 +178,7 @@ Scraper code in `scripts/`, never imported by the app.
 - [x] 33. Gemini scoring: integrate `@google/generative-ai` SDK in scraper. Score new comments for humor (0–10) using Gemini 2.5 Flash before writing feed.json. API key from `GEMINI_API_KEY` env var; skip if missing. Only score comments without a `humor` field.
 - [x] 34. Humor badge + opacity: color-scaled badge per PostCard (7–10 brand/coral, 3–6 neutral, 0–2 ink-subtle). humorReason on hover. Below-threshold (5) comments at 50% opacity with "נסתר" chip.
 - [x] 35. Filter toggle + sort: "הכל" / "מצחיק בלבד" toggle (default = funny only). 4th sort mode "מצחיק" sorting by humor desc. Threshold (5) as named constant in src/scoring/.
-- [ ] 36. README update: GEMINI_API_KEY setup, humor scoring explanation, filter usage.
+- [x] 36. README update: GEMINI_API_KEY setup, humor scoring explanation, filter usage.
 
 ---
 
@@ -220,3 +220,5 @@ Scraper code in `scripts/`, never imported by the app.
 - 2026-06-27 — Prompt calibration fix: added username importance section (funny/esoteric names elevate by 2–3 points), expanded MEDIUM to include political opinions with personality, tightened LOW to generic-only filler. Fixes under-scoring of character usernames.
 - 2026-06-27 — Task 34: Humor badge + opacity in PostCard. EngagementFooter now shows 😂 humor badge with color scale (≥7 brand-soft/brand, 3–6 rule/ink-muted, 0–2 rule/ink-subtle). humorReason on hover via title attr. Below-threshold (humor < 5) cards animate to 50% opacity via Framer Motion, with "נסתר" chip next to the header. HUMOR_THRESHOLD = 5 as named constant in src/scoring/humorThreshold.ts.
 - 2026-06-27 — Task 35: Filter toggle + "מצחיק" sort. SortToggle gains a 4th sort option "מצחיק" (humor desc, score tiebreak) and a separate "הכל" / "מצחיק בלבד" toggle button (default = funny only). App.tsx adds funnyOnly state (default true) and a filtered memo that drops below-threshold posts when active. Browser-verified: filter toggles 16↔17 posts, sort by מצחיק puts ברדוגית/שמאלני מזוקק (10) on top, אבי (humor=2) shows "נסתר" chip.
+- 2026-06-27 — Prompt calibration v2: replaced "username matters A LOT" with USERNAME AWARENESS — username as context not automatic bonus, with explicit score ranges for each username+text combination.
+- 2026-06-27 — Task 36: README rewrite. Covers: concept (quote-tweet for Ynet comments), architecture (scraper → Gemini scoring → React UI), quick start, scraping with append mode + GEMINI_API_KEY setup, humor scoring methodology with Hebrew examples and score table, UI features (4 sorts, filter toggle, humor badges, opacity treatment), tuning knobs (score formula, threshold, Gemini prompt), project structure, stack, scripts. 130 lines, English.
