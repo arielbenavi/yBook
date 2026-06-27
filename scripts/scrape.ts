@@ -356,7 +356,7 @@ function getCommentId(post: unknown): string | undefined {
 
 // --- Gemini humor scoring ---
 
-type MappedComment = { id: string; author: string; body: string; humor?: number; humorReason?: string; replies?: MappedComment[] }
+type MappedComment = { id: string; author: string; body: string; likes: number; humor?: number; humorReason?: string; replies?: MappedComment[] }
 
 function collectUnscoredComments(posts: { comment: MappedComment }[]): MappedComment[] {
   const out: MappedComment[] = []
@@ -372,7 +372,7 @@ function collectUnscoredComments(posts: { comment: MappedComment }[]): MappedCom
 }
 
 function buildScoringPrompt(headline: string, comments: MappedComment[]): string {
-  const items = comments.map(c => ({ id: c.id, author: c.author, text: c.body }))
+  const items = comments.map(c => ({ id: c.id, author: c.author, text: c.body, likes: c.likes }))
   return `You are scoring Israeli Ynet talkback comments for how funny, entertaining, or
 interesting they are. You understand Israeli internet culture deeply.
 
@@ -396,6 +396,17 @@ USERNAME AWARENESS:
 - A great username + punchy/funny text = 7–9 (the combo lands)
 - A bland username + funny text = 7–8 (the text carries itself)
 - A bland username + bland text = 0–2 (nothing there)
+
+ENGAGEMENT SIGNAL:
+- High like counts on Ynet (20+ likes) suggest the crowd found this engaging. Use as a
+  mild positive signal (+1-2 points) — popularity alone doesn't make something funny, but
+  a comment that resonates with many readers likely has SOME voice.
+
+OBSERVATIONAL HUMOR:
+- Sharp social observations that are funny because they're specific and true — noting
+  WHO does something, WHEN, or WHERE in a way that's slightly judgmental or ironic.
+  Example: noting that חרדים and women on maternity leave are the ones at a coffee cart
+  during work hours. This is humor through observation, not through punchlines.
 
 MEDIUM scores (3–6) — borderline, some personality:
 - Genuine personal reviews with real detail (not great humor but a real person talking)
