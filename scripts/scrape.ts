@@ -320,6 +320,24 @@ function validateArticleRef(v: unknown, path: string): void {
   }
 }
 
+// --- Append-mode: load existing feed and merge ---
+
+function loadExistingPosts(): unknown[] {
+  try {
+    const data = JSON.parse(readFileSync(OUT_PATH, 'utf-8'))
+    if (Array.isArray(data?.posts)) return data.posts as unknown[]
+  } catch { /* missing or invalid file */ }
+  return []
+}
+
+function getCommentId(post: unknown): string | undefined {
+  if (typeof post !== 'object' || post === null) return undefined
+  const c = (post as Record<string, unknown>).comment
+  if (typeof c !== 'object' || c === null) return undefined
+  const id = (c as Record<string, unknown>).id
+  return typeof id === 'string' ? id : undefined
+}
+
 // --- Comment expansion (unchanged from task 26) ---
 
 async function openCommentsPopup(page: Page): Promise<void> {
@@ -448,9 +466,22 @@ async function scrape(articleUrl: string): Promise<void> {
 
     console.log(`Posts: ${posts.length} (top-level comments → posts)`)
 
+    // Append mode: merge with existing feed, dedup by comment.id (existing wins)
+    const existingPosts = loadExistingPosts()
+    const existingIds = new Set(
+      existingPosts.map(getCommentId).filter((id): id is string => id !== undefined),
+    )
+    const newPosts = posts.filter(p => !existingIds.has(p.comment.id))
+    const mergedPosts = [...existingPosts, ...newPosts]
+
+    console.log(
+      `Merge: ${existingPosts.length} existing + ${newPosts.length} new` +
+      ` (${posts.length - newPosts.length} duplicates skipped) → ${mergedPosts.length} total`,
+    )
+
     const feed = {
       generatedAt: new Date().toISOString(),
-      posts,
+      posts: mergedPosts,
     }
 
     writeFileSync(OUT_PATH, JSON.stringify(feed, null, 2) + '\n')
@@ -459,7 +490,7 @@ async function scrape(articleUrl: string): Promise<void> {
     // Validate: read back the file and run the same shape checks as loadFeed
     const written = JSON.parse(readFileSync(OUT_PATH, 'utf-8'))
     validateFeedShape(written)
-    console.log(`Feed validated OK (${strategy}, ${posts.length} posts)`)
+    console.log(`Feed validated OK (${strategy}, ${mergedPosts.length} posts)`)
   } finally {
     await browser.close()
   }
