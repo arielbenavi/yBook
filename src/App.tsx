@@ -6,6 +6,7 @@ import FeedList from './components/FeedList'
 import FeedSkeleton from './components/FeedSkeleton'
 import SortToggle from './components/SortToggle'
 import { loadFeed } from './data/feed'
+import { HUMOR_THRESHOLD } from './scoring/humorThreshold'
 import { scoreComment } from './scoring/scoreComment'
 import { sortPosts, type SortMode } from './scoring/sortPosts'
 import type { Post } from './types'
@@ -18,10 +19,8 @@ type FeedState =
 function App() {
   const [feed, setFeed] = useState<FeedState>({ status: 'loading' })
   const [sortMode, setSortMode] = useState<SortMode>('top')
+  const [funnyOnly, setFunnyOnly] = useState(true)
 
-  // Pure: kicks off the load; setState only happens asynchronously inside
-  // the promise callbacks, so it never fires synchronously inside the
-  // effect body (react-hooks/set-state-in-effect).
   const fetchFeed = useCallback(() => {
     loadFeed()
       .then(f => setFeed({ status: 'loaded', posts: f.posts }))
@@ -33,8 +32,6 @@ function App() {
       )
   }, [])
 
-  // Event handler — not inside an effect, so the synchronous setFeed is fine.
-  // Resets to loading so the skeleton flashes during retry.
   const handleRetry = useCallback(() => {
     setFeed({ status: 'loading' })
     fetchFeed()
@@ -44,7 +41,6 @@ function App() {
     fetchFeed()
   }, [fetchFeed])
 
-  // One `now` per load → recency stays consistent across the whole feed.
   const ranked = useMemo(() => {
     if (feed.status !== 'loaded') return null
     const now = new Date()
@@ -54,15 +50,28 @@ function App() {
     }))
   }, [feed])
 
+  const filtered = useMemo(() => {
+    if (!ranked) return null
+    if (!funnyOnly) return ranked
+    return ranked.filter(p =>
+      p.comment.humor === undefined || p.comment.humor >= HUMOR_THRESHOLD,
+    )
+  }, [ranked, funnyOnly])
+
   const sorted = useMemo(
-    () => (ranked ? sortPosts(ranked, sortMode) : null),
-    [ranked, sortMode],
+    () => (filtered ? sortPosts(filtered, sortMode) : null),
+    [filtered, sortMode],
   )
 
   return (
     <AppShell>
       <div className="flex flex-col gap-4">
-        <SortToggle mode={sortMode} onChange={setSortMode} />
+        <SortToggle
+          mode={sortMode}
+          onChange={setSortMode}
+          funnyOnly={funnyOnly}
+          onFunnyOnlyChange={setFunnyOnly}
+        />
         {feed.status === 'loading' && <FeedSkeleton />}
         {feed.status === 'loaded' && feed.posts.length === 0 && <EmptyState />}
         {feed.status === 'loaded' && feed.posts.length > 0 && (

@@ -8,7 +8,7 @@
 
 import type { Post } from '../types'
 
-export type SortMode = 'top' | 'newest' | 'discussed'
+export type SortMode = 'top' | 'newest' | 'discussed' | 'funny'
 
 const byScore = (a: Post, b: Post): number =>
   (b.comment.score ?? 0) - (a.comment.score ?? 0)
@@ -20,9 +20,14 @@ export function sortPosts(posts: Post[], mode: SortMode): Post[] {
   }
   if (mode === 'newest') {
     return copy.sort((a, b) => {
-      // ISO 8601 strings sort lexicographically by date; safe across timezones.
       const t = b.comment.timestamp.localeCompare(a.comment.timestamp)
       return t !== 0 ? t : byScore(a, b)
+    })
+  }
+  if (mode === 'funny') {
+    return copy.sort((a, b) => {
+      const h = (b.comment.humor ?? 0) - (a.comment.humor ?? 0)
+      return h !== 0 ? h : byScore(a, b)
     })
   }
   // discussed
