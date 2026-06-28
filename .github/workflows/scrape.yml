@@ -1,0 +1,41 @@
+name: Daily scrape
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - run: npm ci
+
+      - run: npx playwright install chromium --with-deps
+
+      - name: Scrape top Ynet articles
+        run: npx tsx scripts/scrape-top.ts
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Commit and push if feed changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/feed.json public/feed.json
+          if git diff --cached --quiet; then
+            echo "No feed changes — skipping commit"
+          else
+            git commit -m "auto-scrape: $(date -u +%Y-%m-%d)"
+            git push
+          fi

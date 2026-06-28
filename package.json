@@ -10,7 +10,8 @@
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
     "test": "vitest run",
-    "scrape": "tsx scripts/scrape.ts"
+    "scrape": "tsx scripts/scrape.ts",
+    "scrape-top": "tsx scripts/scrape-top.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.1",
