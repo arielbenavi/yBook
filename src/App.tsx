@@ -7,6 +7,7 @@ import FeedSkeleton from './components/FeedSkeleton'
 import InstallPrompt from './components/InstallPrompt'
 import SortToggle from './components/SortToggle'
 import { loadFeed } from './data/feed'
+import { useLikes } from './hooks/useLikes'
 import { HUMOR_THRESHOLD } from './scoring/humorThreshold'
 import { scoreComment } from './scoring/scoreComment'
 import { sortPosts, type SortMode } from './scoring/sortPosts'
@@ -21,6 +22,7 @@ function App() {
   const [feed, setFeed] = useState<FeedState>({ status: 'loading' })
   const [sortMode, setSortMode] = useState<SortMode>('top')
   const [funnyOnly, setFunnyOnly] = useState(true)
+  const { likeCounts, userLikes, toggleLike, enabled: likesEnabled } = useLikes()
 
   const fetchFeed = useCallback(() => {
     loadFeed()
@@ -76,7 +78,12 @@ function App() {
         {feed.status === 'loading' && <FeedSkeleton />}
         {feed.status === 'loaded' && feed.posts.length === 0 && <EmptyState />}
         {feed.status === 'loaded' && feed.posts.length > 0 && (
-          <FeedList posts={sorted ?? []} />
+          <FeedList
+            posts={sorted ?? []}
+            likeCounts={likeCounts}
+            userLikes={userLikes}
+            onToggleLike={likesEnabled ? toggleLike : undefined}
+          />
         )}
         {feed.status === 'error' && (
           <ErrorState message={feed.error.message} onRetry={handleRetry} />

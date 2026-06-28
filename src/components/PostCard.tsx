@@ -10,9 +10,12 @@ import ReplyThread from './ReplyThread'
 type Props = {
   post: Post
   mountDelay?: number
+  sharedLikeCount?: number
+  isLikedByUser?: boolean
+  onToggleLike?: () => void
 }
 
-export default function PostCard({ post, mountDelay = 0 }: Props) {
+export default function PostCard({ post, mountDelay = 0, sharedLikeCount, isLikedByUser, onToggleLike }: Props) {
   const { comment, quoted } = post
   const belowThreshold = comment.humor !== undefined && comment.humor < HUMOR_THRESHOLD
   return (
@@ -33,7 +36,12 @@ export default function PostCard({ post, mountDelay = 0 }: Props) {
       </div>
       <CommentBody title={comment.title} body={comment.body} />
       <QuotedArticleCard article={quoted} />
-      <EngagementFooter comment={comment} />
+      <EngagementFooter
+        comment={comment}
+        sharedLikeCount={sharedLikeCount}
+        isLikedByUser={isLikedByUser}
+        onToggleLike={onToggleLike}
+      />
       <ReplyThread replies={comment.replies ?? []} />
     </motion.article>
   )

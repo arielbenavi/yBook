@@ -1,9 +1,12 @@
 import { motion } from 'framer-motion'
-import { MessageCircle, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Heart, MessageCircle, ThumbsDown, ThumbsUp } from 'lucide-react'
 import type { Comment } from '../types'
 
 type Props = {
   comment: Pick<Comment, 'likes' | 'dislikes' | 'replyCount' | 'score' | 'humor' | 'humorReason'>
+  sharedLikeCount?: number
+  isLikedByUser?: boolean
+  onToggleLike?: () => void
 }
 
 function humorBadgeClass(humor: number): string {
@@ -12,10 +15,31 @@ function humorBadgeClass(humor: number): string {
   return 'bg-rule/20 text-ink-subtle'
 }
 
-export default function EngagementFooter({ comment }: Props) {
+export default function EngagementFooter({ comment, sharedLikeCount, isLikedByUser, onToggleLike }: Props) {
   const { likes, dislikes, replyCount, score, humor, humorReason } = comment
   return (
     <div className="flex items-center gap-5 text-sm text-ink-subtle">
+      {onToggleLike !== undefined && (
+        <motion.button
+          type="button"
+          onClick={onToggleLike}
+          aria-pressed={isLikedByUser}
+          aria-label={isLikedByUser ? 'הסר אהבה' : 'אהבתי'}
+          whileTap={{ scale: 1.25 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+          className="inline-flex min-h-[44px] items-center gap-1.5 md:min-h-0"
+        >
+          <Heart
+            aria-hidden="true"
+            className={`h-4 w-4 transition-colors ${isLikedByUser ? 'fill-brand text-brand' : 'text-ink-subtle'}`}
+          />
+          {(sharedLikeCount ?? 0) > 0 && (
+            <span className={isLikedByUser ? 'text-brand' : undefined}>
+              {sharedLikeCount}
+            </span>
+          )}
+        </motion.button>
+      )}
       <span
         aria-label={`${likes} אהבתי`}
         className="inline-flex items-center gap-1.5"

@@ -14,6 +14,7 @@
     "scrape-top": "tsx scripts/scrape-top.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.108.2",
     "@tailwindcss/vite": "^4.3.1",
     "framer-motion": "^11.18.2",
     "lucide-react": "^1.21.0",
