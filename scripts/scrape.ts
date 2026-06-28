@@ -420,6 +420,12 @@ LOW scores (0–2) — truly personality-free filler ONLY:
   have written, with a bland username, no punch, no personality
 - Zero voice — could be written by literally anyone about literally anything
 
+CALIBRATION EXAMPLES (use these to anchor your scale):
+- Username: חחחחחחחח | Text: "שמישהו יגיד לו המלך עירום (טיפש גמור)" | likes: 47 → 9
+- Username: אנונימי | Text: "לעגלת קפה מגיעים חרדים, ונשים בחופשת לידה..פתוחים שבזמן עבוד" | likes: 7 → 7
+- Username: שמאלני מזוקק | Text: "כל טמבלי השמאל מנסים להשיג עוד מנדטים..." | likes: 1 → 5 (interesting username but the text is an earnest political rant without humor, irony, or a punchy landing — voice in the name, not in the words)
+- Username: גילי | Text: "עגלה מדהימה טעימה עם אווירה נעימה מומלץ בחום..." | likes: 0 → 3
+
 Score the following comments on this article. Respond ONLY with a JSON array.
 
 Article: ${headline}
