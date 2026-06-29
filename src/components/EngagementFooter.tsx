@@ -1,9 +1,9 @@
-import { motion } from 'framer-motion'
 import { Heart, MessageCircle, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { motion } from 'framer-motion'
 import type { Comment } from '../types'
 
 type Props = {
-  comment: Pick<Comment, 'likes' | 'dislikes' | 'replyCount' | 'score' | 'humor' | 'humorReason'>
+  comment: Pick<Comment, 'likes' | 'dislikes' | 'replyCount' | 'humor' | 'humorReason'>
   sharedLikeCount?: number
   isLikedByUser?: boolean
   onToggleLike?: () => void
@@ -16,7 +16,7 @@ function humorBadgeClass(humor: number): string {
 }
 
 export default function EngagementFooter({ comment, sharedLikeCount, isLikedByUser, onToggleLike }: Props) {
-  const { likes, dislikes, replyCount, score, humor, humorReason } = comment
+  const { likes, dislikes, replyCount, humor, humorReason } = comment
   return (
     <div className="flex items-center gap-5 text-sm text-ink-subtle">
       {onToggleLike !== undefined && (
@@ -61,28 +61,15 @@ export default function EngagementFooter({ comment, sharedLikeCount, isLikedByUs
         <MessageCircle aria-hidden="true" className="h-4 w-4" />
         <span>{replyCount}</span>
       </span>
-      <span className="ms-auto inline-flex items-center gap-2">
-        {humor !== undefined && (
-          <span
-            aria-label={`ציון הומור ${humor}`}
-            title={humorReason}
-            className={`rounded-full px-2 py-0.5 text-xs font-medium ${humorBadgeClass(humor)}`}
-          >
-            😂 {humor}
-          </span>
-        )}
-        {score !== undefined && (
-          <motion.span
-            initial={{ scale: 0.85, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-            aria-label={`ציון עניין ${Math.round(score)}`}
-            className="rounded-full bg-rule/40 px-2 py-0.5 text-xs font-medium text-ink-subtle"
-          >
-            {Math.round(score)}
-          </motion.span>
-        )}
-      </span>
+      {humor !== undefined && (
+        <span
+          aria-label={`ציון הומור ${humor}`}
+          title={humorReason}
+          className={`ms-auto rounded-full px-2 py-0.5 text-xs font-medium ${humorBadgeClass(humor)}`}
+        >
+          😂 {humor}
+        </span>
+      )}
     </div>
   )
 }

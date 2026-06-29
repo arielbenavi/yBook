@@ -48,10 +48,12 @@ type RawDomItem = {
 
 // --- CLI ---
 
-const url = process.argv[2]
+const maxPostsFlag = process.argv.indexOf('--max-posts')
+const maxPosts = maxPostsFlag !== -1 ? parseInt(process.argv[maxPostsFlag + 1], 10) : undefined
+const url = process.argv.find(a => a.startsWith('http'))
 
 if (!url) {
-  console.error('Usage: npm run scrape -- <ynetArticleUrl>')
+  console.error('Usage: npm run scrape -- <ynetArticleUrl> [--max-posts N]')
   process.exit(1)
 }
 
@@ -687,7 +689,7 @@ async function scrape(articleUrl: string): Promise<void> {
     const existingIds = new Set(
       existingPosts.map(getCommentId).filter((id): id is string => id !== undefined),
     )
-    const newPosts = posts.filter(p => !existingIds.has(p.comment.id))
+    let newPosts = posts.filter(p => !existingIds.has(p.comment.id))
 
     // Gemini humor scoring: score new comments before merging
     const unscored = collectUnscoredComments(newPosts)
@@ -696,6 +698,13 @@ async function scrape(articleUrl: string): Promise<void> {
       const scores = await scoreWithGemini(articleRef.title, unscored)
       applyScores(newPosts, scores)
       logScoreSummary(scores, newPosts)
+    }
+
+    if (maxPosts !== undefined && !isNaN(maxPosts) && newPosts.length > maxPosts) {
+      newPosts.sort((a, b) => ((b.comment as MappedComment).humor ?? 0) - ((a.comment as MappedComment).humor ?? 0))
+      const dropped = newPosts.length - maxPosts
+      newPosts = newPosts.slice(0, maxPosts)
+      console.log(`Capped to top ${maxPosts} posts by humor (dropped ${dropped})`)
     }
 
     const mergedPosts = [...existingPosts, ...newPosts]
